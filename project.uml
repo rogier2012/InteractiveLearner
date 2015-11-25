@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>controller</OriginalElement>
+  <nodes>
+    <node x="181.0" y="385.0">view.TestImportView</node>
+    <node x="439.0" y="460.0">view.HomeView</node>
+    <node x="-51.0" y="86.0">controller.TestImportController</node>
+    <node x="368.0" y="310.0">controller.TesterController</node>
+    <node x="294.0" y="460.0">model.TrainedSet</node>
+    <node x="228.0" y="52.0">model.TrainImportedDataSet</node>
+    <node x="-248.0" y="85.0">controller.TrainImportController</node>
+    <node x="140.0" y="535.0">model.Results</node>
+    <node x="0.0" y="310.0">controller.TrainerController</node>
+    <node x="186.0" y="310.0">view.TrainImportView</node>
+    <node x="419.0" y="52.0">model.TestImportedDataSet</node>
+    <node x="402.0" y="155.0">controller.LearnerController</node>
+    <node x="-214.75" y="-30.0">controller.ImportController</node>
+    <node x="338.25" y="-28.0">model.ImportedDataSet</node>
+    <node x="0.0" y="385.0">controller.ResultController</node>
+    <node x="358.0" y="385.0">view.TrainerView</node>
+    <node x="0.0" y="535.0">model.TestedSet</node>
+    <node x="0.0" y="460.0">view.ResultView</node>
+    <node x="147.0" y="460.0">view.TesterView</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="controller.TestImportController" target="controller.ImportController">
+      <point x="0.0" y="-15.0" />
+      <point x="-12.0" y="63.0" />
+      <point x="-65.5" y="28.0" />
+      <point x="34.75" y="15.0" />
+    </edge>
+    <edge source="controller.TrainImportController" target="controller.ImportController">
+      <point x="0.0" y="-15.0" />
+      <point x="-164.5" y="58.0" />
+      <point x="-173.0" y="34.0" />
+      <point x="-34.75" y="15.0" />
+    </edge>
+    <edge source="model.TestImportedDataSet" target="model.ImportedDataSet">
+      <point x="0.0" y="-15.0" />
+      <point x="502.0" y="27.0" />
+      <point x="442.5" y="27.0" />
+      <point x="34.75" y="15.0" />
+    </edge>
+    <edge source="model.TrainImportedDataSet" target="model.ImportedDataSet">
+      <point x="0.0" y="-15.0" />
+      <point x="313.5" y="27.0" />
+      <point x="373.0" y="27.0" />
+      <point x="-34.75" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="179.0" y="328.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
