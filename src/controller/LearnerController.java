@@ -12,4 +12,5 @@ public class LearnerController {
     private TestImportController testImportController = null;
     private FeedBackController feedBackController = null;
     private HomeView homeView;
+    private ResultController resultController;
 }
