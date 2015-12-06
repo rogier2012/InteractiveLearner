@@ -1,5 +1,6 @@
 package controller;
 
+import helper.FileUtils;
 import model.TrainImportedDataSet;
 import view.TrainImportView;
 
@@ -7,6 +8,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Created by Rogier on 25-11-15
@@ -18,17 +21,38 @@ public class TrainImportController implements ActionListener,PanelController{
 
     public TrainImportController() {
         trainImportView = new TrainImportView();
+        trainImportedDataSet = new TrainImportedDataSet();
         trainImportView.addButtonActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton){
+            String clss =  null;
+            if (e.getSource() == trainImportView.getFileButton1()){
+                clss = trainImportView.getTextField1().getText();
+            } else if (e.getSource() == trainImportView.getFileButton2()){
+                clss = trainImportView.getTextField2().getText();
+            }
             File file = trainImportView.getFile();
+            boolean zip;
             try {
-                boolean zip = isZipFile(file);
+                 zip = isZipFile(file);
             } catch (IOException e1) {
-                boolean zip = false;
+                 zip = false;
+            }
+            if (zip){
+                ZipFile zipFile = null;
+                try {
+                    zipFile = new ZipFile(file);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                while (zipFile.entries().hasMoreElements()){
+                    ZipEntry zipEntry = zipFile.entries().nextElement();
+                    trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipEntry));
+                }
             }
         }
     }
@@ -46,7 +70,7 @@ public class TrainImportController implements ActionListener,PanelController{
         DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
         int test = in.readInt();
         in.close();
-        return test == 0x504b0304;
+        return test == ZIPFILE;
     }
 
     @Override
@@ -56,6 +80,6 @@ public class TrainImportController implements ActionListener,PanelController{
 
     @Override
     public JPanel getView() {
-        return null;
+        return trainImportView;
     }
 }

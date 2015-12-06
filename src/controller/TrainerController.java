@@ -19,6 +19,6 @@ public class TrainerController implements PanelController{
 
     @Override
     public JPanel getView() {
-        return null;
+        return trainerView;
     }
 }
