@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
 
@@ -12,10 +13,11 @@ public class TrainImportView extends JPanel {
     private JButton fileButton2;
     private JTextField textField1;
     private JTextField textField2;
+    private JButton nextButton;
 
 
     public TrainImportView() {
-        setupGUI();
+        super(new GridBagLayout());
     }
 
     public void addButtonActionListener(ActionListener actionListener){
@@ -35,8 +37,42 @@ public class TrainImportView extends JPanel {
     }
 
     public void setupGUI(){
-        fileButton1 = new JButton();
-        fileButton2 = new JButton();
+        GridBagConstraints gbc = new GridBagConstraints();
+        textField1 = new JTextField();
+        gbc.ipadx = 100;
+        gbc.ipady = 10;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(textField1, gbc);
+        fileButton1 = new JButton("Class 1");
+        gbc = new GridBagConstraints();
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.add(fileButton1, gbc);
+        textField2 = new JTextField();
+        gbc = new GridBagConstraints();
+        gbc.ipadx = 100;
+        gbc.ipady = 10;
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        this.add(textField2, gbc);
+        fileButton2 = new JButton("Class 2");
+        gbc = new GridBagConstraints();
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        this.add(fileButton2, gbc);
+        nextButton = new JButton("Next");
+        gbc = new GridBagConstraints();
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        this.add(nextButton, gbc);
+
     }
 
     public JButton getFileButton1(){

@@ -21,4 +21,8 @@ public class TestImportController implements PanelController{
     public JPanel getView() {
         return null;
     }
+
+    public TestImportedDataSet getDataSet() {
+        return testImportedDataSet;
+    }
 }

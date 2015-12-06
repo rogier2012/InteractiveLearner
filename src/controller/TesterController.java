@@ -1,5 +1,6 @@
 package controller;
 
+import model.TestImportedDataSet;
 import model.TestedSet;
 import view.TesterView;
 
@@ -20,5 +21,9 @@ public class TesterController implements PanelController{
     @Override
     public JPanel getView() {
         return null;
+    }
+
+    public void test(TestImportedDataSet dataSet){
+
     }
 }

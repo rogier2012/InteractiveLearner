@@ -17,17 +17,20 @@ import java.util.zip.ZipFile;
 public class TrainImportController implements ActionListener,PanelController{
     private TrainImportedDataSet trainImportedDataSet = null;
     private TrainImportView trainImportView;
-    public static final int ZIPFILE = 0x504b0304;
+
 
     public TrainImportController() {
         trainImportView = new TrainImportView();
         trainImportedDataSet = new TrainImportedDataSet();
+        this.setupGUI();
         trainImportView.addButtonActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton){
+        if (e.getActionCommand().equals("Next")){
+
+        } else if (e.getSource() instanceof JButton){
             String clss =  null;
             if (e.getSource() == trainImportView.getFileButton1()){
                 clss = trainImportView.getTextField1().getText();
@@ -37,7 +40,7 @@ public class TrainImportController implements ActionListener,PanelController{
             File file = trainImportView.getFile();
             boolean zip;
             try {
-                 zip = isZipFile(file);
+                 zip = FileUtils.isZipFile(file);
             } catch (IOException e1) {
                  zip = false;
             }
@@ -57,25 +60,13 @@ public class TrainImportController implements ActionListener,PanelController{
         }
     }
 
-    public static boolean isZipFile(File file) throws IOException {
-        if(file.isDirectory()) {
-            return false;
-        }
-        if(!file.canRead()) {
-            throw new IOException("Cannot read file "+file.getAbsolutePath());
-        }
-        if(file.length() < 4) {
-            return false;
-        }
-        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
-        int test = in.readInt();
-        in.close();
-        return test == ZIPFILE;
+    public TrainImportedDataSet getData(){
+        return trainImportedDataSet;
     }
 
     @Override
     public void setupGUI() {
-
+        trainImportView.setupGUI();
     }
 
     @Override
