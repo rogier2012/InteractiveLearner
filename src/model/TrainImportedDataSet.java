@@ -16,7 +16,7 @@ public class TrainImportedDataSet {
     }
 
     public void addDocument(String clss, String document){
-        System.out.println(document);
+
         if (data == null){
             data = new HashMap<>();
         }
@@ -26,12 +26,18 @@ public class TrainImportedDataSet {
             list.add(document);
             data.put(clss, list);
         } else {
+
             for (String string : data.keySet()){
                 if (string.equals(clss)){
                     data.get(clss).add(document);
 
                 }
             }
+
         }
+
+
     }
+
+
 }

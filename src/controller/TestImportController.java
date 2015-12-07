@@ -55,6 +55,7 @@ public class TestImportController implements PanelController,ActionListener {
                 zip = false;
             }
             if (zip){
+                System.out.println("HIERo");
                 ZipFile zipFile = null;
                 try {
                     zipFile = new ZipFile(file);
@@ -62,10 +63,12 @@ public class TestImportController implements PanelController,ActionListener {
                     e1.printStackTrace();
                 }
 
-                while (zipFile.entries().hasMoreElements()){
+                do {
+
                     ZipEntry zipEntry = zipFile.entries().nextElement();
                     testImportedDataSet.addUnclassifiedDocument(FileUtils.fileToString(zipFile,zipEntry));
-                }
+                } while (zipFile.entries().hasMoreElements());
+
             }
         }
     }
