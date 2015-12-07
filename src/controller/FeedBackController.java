@@ -1,6 +1,6 @@
 package controller;
 
-import model.FeedBackSet;
+import model.FeedbackSet;
 import view.FeedBackView;
 
 import javax.swing.*;
@@ -9,7 +9,7 @@ import javax.swing.*;
  * Created by Rogier on 25-11-15
  */
 public class FeedBackController implements PanelController{
-    private FeedBackSet feedBackSet;
+    private FeedbackSet feedBackSet;
     private FeedBackView feedBackView;
 
 

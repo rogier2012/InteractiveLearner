@@ -5,6 +5,6 @@ import java.util.List;
 /**
  * Created by Rogier on 25-11-15
  */
-public class FeedBackSet {
+public class FeedbackSet {
     private List<List<String>> data;
 }
