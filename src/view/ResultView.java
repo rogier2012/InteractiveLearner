@@ -23,8 +23,8 @@ public class ResultView extends JPanel{
         textArea = new JTextArea();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.fill = GridBagConstraints.BOTH;
+
         gbc.weightx = 1;
         gbc.weighty = 1;
         JScrollPane scrollPane = new JScrollPane(textArea);

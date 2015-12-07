@@ -20,6 +20,7 @@ public class LearnerController implements ActionListener{
     private HomeView homeView;
     private ResultController resultController;
     private JFrame frame;
+    private int status;
 
     public LearnerController() {
         this.setupGUI();
@@ -27,6 +28,7 @@ public class LearnerController implements ActionListener{
         trainImportController.addNextButtonListener(this);
         //for now
         this.nextPanel(trainImportController);
+        status = 1;
         //
         trainerControllerl = new TrainerController();
         testImportController = new TestImportController();
@@ -53,14 +55,16 @@ public class LearnerController implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof TrainImportView){
+        if (status == 1){
 //            this.nextPanel(trainerControllerl);
             trainerControllerl.train(trainImportController.getData());
             this.nextPanel(testImportController);
-        } else if (e.getSource() instanceof TestImportView){
+            status = 3;
+        } else if (status == 3){
 //            this.nextPanel(testerController);
             testerController.test(trainerControllerl.getTrainedSet(),testImportController.getDataSet());
             this.nextPanel(resultController);
+            status = 5;
         }
     }
 }

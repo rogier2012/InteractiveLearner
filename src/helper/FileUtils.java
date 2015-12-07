@@ -26,7 +26,8 @@ public class FileUtils {
     }
 
     public static boolean isZipFile(File file) throws IOException {
-        if(file.isDirectory()) {
+
+        if(file == null || file.isDirectory()) {
             return false;
         }
         if(!file.canRead()) {

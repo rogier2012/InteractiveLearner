@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -49,11 +50,12 @@ public class TrainImportController implements ActionListener,PanelController{
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-
-                while (zipFile.entries().hasMoreElements()){
-                    ZipEntry zipEntry = zipFile.entries().nextElement();
+                Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                while (entries.hasMoreElements()){
+                    ZipEntry zipEntry = entries.nextElement();
                     trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipFile,zipEntry));
                 }
+                System.out.println(trainImportedDataSet.getData().get(clss).size());
             }
         }
     }
