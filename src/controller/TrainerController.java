@@ -5,6 +5,8 @@ import model.TrainedSet;
 import view.TrainerView;
 
 import javax.swing.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rogier on 25-11-15
@@ -29,7 +31,11 @@ public class TrainerController implements PanelController{
     }
 
     public void train(TrainImportedDataSet dataSet){
-        //TODO Train
+      Map<String, List<String>> data = dataSet.getData();
+      for(String clss : data.keySet()){
+
+      }
+
     }
 
     public TrainedSet getTrainedSet() {

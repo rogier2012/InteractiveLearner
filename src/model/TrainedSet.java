@@ -7,4 +7,14 @@ import java.util.Map;
  */
 public class TrainedSet {
     private Map<String,Map<String, Integer>> wordCount;
+
+    public Map<String, Map<String, Integer>> getWordCount() {
+        return wordCount;
+    }
+
+    public void insert(String clss, String word){
+        if (wordCount == null){
+
+        }
+    }
 }
