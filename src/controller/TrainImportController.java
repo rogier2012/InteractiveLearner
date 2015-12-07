@@ -29,7 +29,7 @@ public class TrainImportController implements ActionListener,PanelController{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof JButton){
+        if (e.getSource() instanceof JButton ){
             String clss =  null;
             if (e.getSource() == trainImportView.getFileButton1()){
                 clss = trainImportView.getTextField1().getText();
@@ -55,6 +55,7 @@ public class TrainImportController implements ActionListener,PanelController{
                     ZipEntry zipEntry = entries.nextElement();
                     trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipFile,zipEntry));
                 }
+
                 System.out.println(trainImportedDataSet.getData().get(clss).size());
             }
         }

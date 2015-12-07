@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,7 +15,20 @@ public class TrainedSet {
 
     public void insert(String clss, String word){
         if (wordCount == null){
+            wordCount = new HashMap<>();
+        }
 
+        if (!wordCount.containsKey(clss)){
+            Map<String, Integer> word1 = new HashMap<>();
+            word1.put(word, 1);
+            wordCount.put(clss, word1);
+        } else {
+            if (!wordCount.get(clss).containsKey(word)){
+                wordCount.get(clss).put(word,1);
+            } else {
+                int value = wordCount.get(clss).get(word);
+                wordCount.get(clss).replace(word,value + 1);
+            }
         }
     }
 }
