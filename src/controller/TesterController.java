@@ -2,6 +2,7 @@ package controller;
 
 import model.TestImportedDataSet;
 import model.TestedSet;
+import model.TrainedSet;
 import view.TesterView;
 
 import javax.swing.*;
@@ -13,9 +14,14 @@ public class TesterController implements PanelController{
     private TestedSet testedSet;
     private TesterView testerView;
 
+    public TesterController() {
+        testerView = new TesterView();
+        testedSet = new TestedSet();
+    }
+
     @Override
     public void setupGUI() {
-
+        testerView.setupGUI();
     }
 
     @Override
@@ -23,7 +29,7 @@ public class TesterController implements PanelController{
         return testerView;
     }
 
-    public void test(TestImportedDataSet dataSet){
+    public void test(TrainedSet trainedSet, TestImportedDataSet dataSet){
 
     }
 }

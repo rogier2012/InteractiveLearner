@@ -40,8 +40,8 @@ public class LearnerController implements ActionListener{
     public void setupGUI(){
         frame = new JFrame();
         homeView = new HomeView();
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(dimension);
+//        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(500,500);
 //        frame.setContentPane(homeView);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -57,9 +57,11 @@ public class LearnerController implements ActionListener{
         if (e.getSource() instanceof TrainImportView){
 //            this.nextPanel(trainerControllerl);
             trainerControllerl.train(trainImportController.getData());
+            this.nextPanel(testImportController);
         } else if (e.getSource() instanceof TestImportView){
 //            this.nextPanel(testerController);
-            testerController.test(testImportController.getDataSet());
+            testerController.test(trainerControllerl.getTrainedSet(),testImportController.getDataSet());
+            this.nextPanel(resultController);
         }
     }
 }
