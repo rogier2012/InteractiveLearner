@@ -20,7 +20,7 @@ public class TesterController implements PanelController{
 
     @Override
     public JPanel getView() {
-        return null;
+        return testerView;
     }
 
     public void test(TestImportedDataSet dataSet){

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,5 +8,12 @@ import java.util.List;
  */
 public class TestImportedDataSet {
     private List<String> data;
+
+    public void addUnclassifiedDocument(String document){
+        if(data == null){
+            data = new ArrayList<>();
+        }
+        data.add(document);
+    }
 
 }

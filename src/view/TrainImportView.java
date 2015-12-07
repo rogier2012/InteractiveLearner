@@ -25,15 +25,8 @@ public class TrainImportView extends JPanel {
         fileButton2.addActionListener(actionListener);
     }
 
-    public File getFile(){
-        File selectedFile = null;
-        JFileChooser fileChooser = new JFileChooser();
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            selectedFile = fileChooser.getSelectedFile();
-
-        }
-        return selectedFile;
+    public void addNextButtonListener(ActionListener actionListener){
+        nextButton.addActionListener(actionListener);
     }
 
     public void setupGUI(){

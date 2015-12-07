@@ -1,14 +1,18 @@
 package controller;
 
 import view.HomeView;
+import view.TestImportView;
+import view.TrainImportView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Rogier on 25-11-15
  */
-public class LearnerController {
+public class LearnerController implements ActionListener{
     private TesterController testerController = null;
     private TrainerController trainerControllerl;
     private TrainImportController trainImportController = null;
@@ -21,13 +25,14 @@ public class LearnerController {
     public LearnerController() {
         this.setupGUI();
         trainImportController = new TrainImportController();
+        trainImportController.addNextButtonListener(this);
+        //for now
         this.nextPanel(trainImportController);
+        //
         trainerControllerl = new TrainerController();
-        trainerControllerl.train(trainImportController.getData());
         testImportController = new TestImportController();
-        this.nextPanel(testImportController);
+        testImportController.addNextButtonListener(this);
         testerController = new TesterController();
-        testerController.test(testImportController.getDataSet());
         resultController = new ResultController();
 //        this.nextPanel(null);
     }
@@ -45,5 +50,16 @@ public class LearnerController {
     public void nextPanel(PanelController controller){
         frame.setContentPane(controller.getView());
         frame.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() instanceof TrainImportView){
+//            this.nextPanel(trainerControllerl);
+            trainerControllerl.train(trainImportController.getData());
+        } else if (e.getSource() instanceof TestImportView){
+//            this.nextPanel(testerController);
+            testerController.test(testImportController.getDataSet());
+        }
     }
 }

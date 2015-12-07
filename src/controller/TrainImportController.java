@@ -28,16 +28,14 @@ public class TrainImportController implements ActionListener,PanelController{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Next")){
-
-        } else if (e.getSource() instanceof JButton){
+        if (e.getSource() instanceof JButton){
             String clss =  null;
             if (e.getSource() == trainImportView.getFileButton1()){
                 clss = trainImportView.getTextField1().getText();
             } else if (e.getSource() == trainImportView.getFileButton2()){
                 clss = trainImportView.getTextField2().getText();
             }
-            File file = trainImportView.getFile();
+            File file = FileUtils.getFile();
             boolean zip;
             try {
                  zip = FileUtils.isZipFile(file);
@@ -54,7 +52,7 @@ public class TrainImportController implements ActionListener,PanelController{
 
                 while (zipFile.entries().hasMoreElements()){
                     ZipEntry zipEntry = zipFile.entries().nextElement();
-                    trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipEntry));
+                    trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipFile,zipEntry));
                 }
             }
         }
@@ -62,6 +60,10 @@ public class TrainImportController implements ActionListener,PanelController{
 
     public TrainImportedDataSet getData(){
         return trainImportedDataSet;
+    }
+
+    public void addNextButtonListener(ActionListener actionListener){
+        trainImportView.addNextButtonListener(actionListener);
     }
 
     @Override
