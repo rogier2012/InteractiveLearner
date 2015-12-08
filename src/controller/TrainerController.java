@@ -5,6 +5,8 @@ import model.TrainedSet;
 import view.TrainerView;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +35,17 @@ public class TrainerController implements PanelController{
     public void train(TrainImportedDataSet dataSet){
       Map<String, List<String>> data = dataSet.getData();
       for(String clss : data.keySet()){
+        for (String document : data.get(clss)){
+            List<String> stringList = Arrays.asList(document.split("\\s+"));
+            for (String string1: stringList){
+                String result = string1.toLowerCase();
+                result = result.replaceAll("[^a-zA-Z]+", "");
+                if (!result.equals("")){
+                    trainedSet.insert(clss, result);
+                }
 
+            }
+        }
       }
 
     }
