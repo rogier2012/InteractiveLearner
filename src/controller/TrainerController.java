@@ -16,7 +16,6 @@ import java.util.Map;
 public class TrainerController implements PanelController{
     private TrainedSet trainedSet;
     private TrainerView trainerView;
-
     public TrainerController() {
 //        trainerView = new TrainerView();
         trainedSet = new TrainedSet();
