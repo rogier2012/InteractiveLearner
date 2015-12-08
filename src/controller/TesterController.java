@@ -30,6 +30,7 @@ public class TesterController implements PanelController{
     }
 
     public void test(TrainedSet trainedSet, TestImportedDataSet dataSet) {
+        System.out.println(dataSet.getData().size());
         for (String document : dataSet.getData()) {
             testedSet.addClassifiedDocument("Male", document);
         }

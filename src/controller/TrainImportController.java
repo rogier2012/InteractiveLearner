@@ -59,7 +59,6 @@ public class TrainImportController implements ActionListener,PanelController,Doc
                     trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipFile,zipEntry));
                 }
 
-                System.out.println(trainImportedDataSet.getData().get(clss).size());
             }
         }
     }

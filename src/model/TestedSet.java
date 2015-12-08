@@ -14,7 +14,7 @@ public class TestedSet {
         if (result == null){
             result = new HashMap<>();
         }
-        result.put(clss,document);
+        result.put(document,clss);
     }
 
     public Map<String, String> getResult() {
