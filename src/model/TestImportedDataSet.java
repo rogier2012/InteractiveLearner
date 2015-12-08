@@ -16,4 +16,8 @@ public class TestImportedDataSet {
         data.add(document);
     }
 
+    public List<String> getData(){
+        return data;
+    }
+
 }

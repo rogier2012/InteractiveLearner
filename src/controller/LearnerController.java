@@ -64,6 +64,7 @@ public class LearnerController implements ActionListener{
 //            this.nextPanel(testerController);
             testerController.test(trainerControllerl.getTrainedSet(),testImportController.getDataSet());
             this.nextPanel(resultController);
+            resultController.displayResults(testerController.getTestedSet());
             status = 5;
         }
     }

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -55,7 +56,6 @@ public class TestImportController implements PanelController,ActionListener {
                 zip = false;
             }
             if (zip){
-                System.out.println("HIERo");
                 ZipFile zipFile = null;
                 try {
                     zipFile = new ZipFile(file);
@@ -63,11 +63,11 @@ public class TestImportController implements PanelController,ActionListener {
                     e1.printStackTrace();
                 }
 
-                do {
-
-                    ZipEntry zipEntry = zipFile.entries().nextElement();
+                Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                while (entries.hasMoreElements()){
+                    ZipEntry zipEntry = entries.nextElement();
                     testImportedDataSet.addUnclassifiedDocument(FileUtils.fileToString(zipFile,zipEntry));
-                } while (zipFile.entries().hasMoreElements());
+                }
 
             }
         }

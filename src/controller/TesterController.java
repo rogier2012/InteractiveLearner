@@ -29,7 +29,14 @@ public class TesterController implements PanelController{
         return testerView;
     }
 
-    public void test(TrainedSet trainedSet, TestImportedDataSet dataSet){
+    public void test(TrainedSet trainedSet, TestImportedDataSet dataSet) {
+        for (String document : dataSet.getData()) {
+            testedSet.addClassifiedDocument("Male", document);
+        }
+        System.out.println(testedSet.getResult().size());
+    }
 
+    public TestedSet getTestedSet() {
+        return testedSet;
     }
 }

@@ -5,6 +5,8 @@ import model.TrainImportedDataSet;
 import view.TrainImportView;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
@@ -15,7 +17,7 @@ import java.util.zip.ZipFile;
 /**
  * Created by Rogier on 25-11-15
  */
-public class TrainImportController implements ActionListener,PanelController{
+public class TrainImportController implements ActionListener,PanelController,DocumentListener{
     private TrainImportedDataSet trainImportedDataSet = null;
     private TrainImportView trainImportView;
 
@@ -25,6 +27,7 @@ public class TrainImportController implements ActionListener,PanelController{
         trainImportedDataSet = new TrainImportedDataSet();
         this.setupGUI();
         trainImportView.addButtonActionListener(this);
+        trainImportView.addDocumentListener();
     }
 
     @Override
@@ -77,5 +80,20 @@ public class TrainImportController implements ActionListener,PanelController{
     @Override
     public JPanel getView() {
         return trainImportView;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+
     }
 }

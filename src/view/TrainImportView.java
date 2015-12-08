@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -37,7 +39,8 @@ public class TrainImportView extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(textField1, gbc);
-        fileButton1 = new JButton("Class 1");
+        fileButton1 = new JButton("Import 1");
+        fileButton1.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -51,7 +54,8 @@ public class TrainImportView extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 0;
         this.add(textField2, gbc);
-        fileButton2 = new JButton("Class 2");
+        fileButton2 = new JButton("Import 2");
+        fileButton2.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -83,4 +87,44 @@ public class TrainImportView extends JPanel {
     public JTextField getTextField2() {
         return textField2;
     }
+
+    public void addDocumentListener(){
+        textField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                fileButton1.setEnabled(true);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (e.getDocument().getLength() == 0){
+                    fileButton1.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+        textField2.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                fileButton2.setEnabled(true);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (e.getDocument().getLength() == 0){
+                    fileButton2.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+    }
+
 }

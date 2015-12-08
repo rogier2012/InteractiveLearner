@@ -33,7 +33,8 @@ public class ResultView extends JPanel{
 
     public void displayDocuments(Map<String, String> testedSet){
         for (String category : testedSet.keySet()){
-            textArea.append("Class: " + category + " Docuement: " + testedSet.get(category) + "\n");
+            textArea.append("Class: " + category + " Document: " + testedSet.get(category) + "\n");
+            repaint();
         }
     }
 }
