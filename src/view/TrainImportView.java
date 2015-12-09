@@ -63,6 +63,7 @@ public class TrainImportView extends JPanel {
         gbc.gridy = 1;
         this.add(fileButton2, gbc);
         nextButton = new JButton("Next");
+        nextButton.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -86,6 +87,10 @@ public class TrainImportView extends JPanel {
 
     public JTextField getTextField2() {
         return textField2;
+    }
+
+    public void setNextButtonEnabled(boolean active){
+        nextButton.setEnabled(active);
     }
 
     public void addDocumentListener(){

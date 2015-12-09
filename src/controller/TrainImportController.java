@@ -60,6 +60,9 @@ public class TrainImportController implements ActionListener,PanelController,Doc
                 }
 
             }
+            if(trainImportedDataSet.getData().size() == 2){
+                trainImportView.setNextButtonEnabled(true);
+            }
         }
     }
 

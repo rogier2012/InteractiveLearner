@@ -70,6 +70,11 @@ public class TestImportController implements PanelController,ActionListener {
                 }
 
             }
+            if(testImportedDataSet.getData()!= null){
+                testImportView.setNextButtonEnabled(true);
+            }
         }
     }
+
+
 }

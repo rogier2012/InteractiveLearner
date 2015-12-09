@@ -35,6 +35,7 @@ public class TestImportView extends JPanel {
         gbc.gridy = 1;
         this.add(fileButton1, gbc);
         nextButton = new JButton("Next");
+        nextButton.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
@@ -53,5 +54,7 @@ public class TestImportView extends JPanel {
         return textField1;
     }
 
-
+    public void setNextButtonEnabled(boolean active){
+        nextButton.setEnabled(active);
+    }
 }

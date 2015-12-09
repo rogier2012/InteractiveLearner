@@ -86,7 +86,7 @@ public class TesterController implements PanelController{
         for(String clss : resultPropabiltyOfDocument.keySet()){
 
             result =  Math.max(result, resultPropabiltyOfDocument.get(clss));
-            if(result == resultPropabiltyOfDocument.get(clss)){
+            if(resultPropabiltyOfDocument.get(clss) == result){
                 resultclass = clss;
             }
 
