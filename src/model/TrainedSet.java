@@ -40,9 +40,9 @@ public class TrainedSet {
         }
 
         if (!wordCount.containsKey(category)){
-            Map<String, Integer> word1 = new HashMap<>();
-            word1.put(word, 1);
-            wordCount.put(category, word1);
+            Map<String, Integer> stringIntegerHashMap = new HashMap<>();
+            stringIntegerHashMap.put(word, 1);
+            wordCount.put(category, stringIntegerHashMap);
 
         } else {
             if (!wordCount.get(category).containsKey(word)){

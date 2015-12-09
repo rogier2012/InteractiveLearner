@@ -33,8 +33,8 @@ public class TrainerController implements PanelController{
       for(String category : data.keySet()){
         for (String document : data.get(category)){
             Set<String> stringSet = new HashSet<>(Arrays.asList(document.split("\\s+")));
-            for (String string1: stringSet){
-                String result = string1.toLowerCase();
+            for (String word : stringSet) {
+                String result = word.toLowerCase();
                 result = result.replaceAll("[^a-zA-Z]+", "");
                 if (!result.equals("")){
                     trainedSet.insert(category, result);
