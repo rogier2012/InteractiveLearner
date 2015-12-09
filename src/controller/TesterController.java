@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.lang.Math.*;
+import static java.lang.Math.log;
 
 /**
  * Created by Rogier on 25-11-15
@@ -42,12 +42,11 @@ public class TesterController implements PanelController{
 
         for (String document : dataSet.getData()) {
             Map<String, Double> resultPropabiltyOfDocument = new HashMap<String, Double>();
-
             List<String> stringList = Arrays.asList(document.split("\\s+"));
             Map<String, Double> resultProb = new HashMap<String, Double>();
             for(String category : trainedMap.keySet()){
                 double totalDocumentCount = trainedSet.getDocumentCount(category);
-                resultProb.put(category, 0.0);
+                resultProb.put(category, 1.0);
                 for(String word : stringList){
                     if(trainedMap.get(category).get(word) != null){
                         double calculatedval = ((double)trainedMap.get(category).get(word)+ 1.0 )/((double)totalDocumentCount+2.0);
@@ -60,9 +59,7 @@ public class TesterController implements PanelController{
                 }
 
                 double newval = resultProb.get(category) + log(propClass);
-//                System.out.println(newval);
                 resultProb.replace(category, newval);
-//                System.out.println(clss);
                 resultPropabiltyOfDocument.put(category, resultProb.get(category));
 
             }
@@ -78,16 +75,17 @@ public class TesterController implements PanelController{
     }
 
     public String getHighestProp( Map<String, Double> resultPropabiltyOfDocument){
-        double result = -Integer.MIN_VALUE;
-        String resultclass = "ERROR IN GETHIGHESTPROP";
-        for(String clss : resultPropabiltyOfDocument.keySet()){
-            result =  Math.max(result, resultPropabiltyOfDocument.get(clss));
-            if(resultPropabiltyOfDocument.get(clss) == result){
-                resultclass = clss;
+        double result = -Double.MAX_VALUE;
+        String resultClass = "ERROR IN GETHIGHESTPROP";
+        for (String category : resultPropabiltyOfDocument.keySet()) {
+
+            if (resultPropabiltyOfDocument.get(category) > result) {
+                result = resultPropabiltyOfDocument.get(category);
+                resultClass = category;
             }
 
         }
-        return resultclass;
+        return resultClass;
 
     }
 }
