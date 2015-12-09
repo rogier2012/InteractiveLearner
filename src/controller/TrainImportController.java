@@ -34,12 +34,13 @@ public class TrainImportController implements ActionListener,PanelController,Doc
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton ){
             String clss =  null;
+
+            File file = FileUtils.getFile("Open a train file");
             if (e.getSource() == trainImportView.getFileButton1()){
                 clss = trainImportView.getTextField1().getText();
             } else if (e.getSource() == trainImportView.getFileButton2()){
                 clss = trainImportView.getTextField2().getText();
             }
-            File file = FileUtils.getFile();
             boolean zip;
             try {
                  zip = FileUtils.isZipFile(file);
@@ -58,11 +59,11 @@ public class TrainImportController implements ActionListener,PanelController,Doc
                     ZipEntry zipEntry = entries.nextElement();
                     trainImportedDataSet.addDocument(clss, FileUtils.fileToString(zipFile,zipEntry));
                 }
+                if(trainImportedDataSet.getData().size() == 2){
+                    trainImportView.setNextButtonEnabled(true);
+                }
+            }
 
-            }
-            if(trainImportedDataSet.getData().size() == 2){
-                trainImportView.setNextButtonEnabled(true);
-            }
         }
     }
 

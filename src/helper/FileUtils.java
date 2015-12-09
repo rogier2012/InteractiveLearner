@@ -1,6 +1,7 @@
 package helper;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -22,8 +23,10 @@ public class FileUtils {
     }
 
     public static boolean isZipFile(File file) throws IOException {
-
-        if(file == null || file.isDirectory()) {
+        if (file == null){
+            throw new IOException();
+        }
+        if( file.isDirectory()) {
             return false;
         }
         if(!file.canRead()) {
@@ -38,9 +41,12 @@ public class FileUtils {
         return test == ZIPFILE;
     }
 
-    public static File getFile(){
+    public static File getFile(String description){
         File selectedFile = null;
         JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter zipOnly = new FileNameExtensionFilter(null, "zip");
+        fileChooser.setFileFilter(zipOnly);
+        fileChooser.setDialogTitle(description);
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();

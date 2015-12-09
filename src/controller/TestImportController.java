@@ -48,7 +48,7 @@ public class TestImportController implements PanelController,ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof JButton){
-            File file = FileUtils.getFile();
+            File file = FileUtils.getFile("Open a test file");
             boolean zip;
             try {
                 zip = FileUtils.isZipFile(file);

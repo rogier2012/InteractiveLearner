@@ -28,7 +28,7 @@ public class TestImportView extends JPanel {
 
     public void setupGUI(){
         GridBagConstraints gbc = new GridBagConstraints();
-        fileButton1 = new JButton("Class 1");
+        fileButton1 = new JButton("Import Test");
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.gridx = 0;
