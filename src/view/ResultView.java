@@ -1,7 +1,5 @@
 package view;
 
-import model.TestedSet;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;

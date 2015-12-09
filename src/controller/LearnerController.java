@@ -1,8 +1,6 @@
 package controller;
 
 import view.HomeView;
-import view.TestImportView;
-import view.TrainImportView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
