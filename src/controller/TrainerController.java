@@ -30,14 +30,14 @@ public class TrainerController implements PanelController{
 
     public void train(TrainImportedDataSet dataSet){
       Map<String, List<String>> data = dataSet.getData();
-      for(String clss : data.keySet()){
-        for (String document : data.get(clss)){
+      for(String category : data.keySet()){
+        for (String document : data.get(category)){
             Set<String> stringSet = new HashSet<>(Arrays.asList(document.split("\\s+")));
             for (String string1: stringSet){
                 String result = string1.toLowerCase();
                 result = result.replaceAll("[^a-zA-Z]+", "");
                 if (!result.equals("")){
-                    trainedSet.insert(clss, result);
+                    trainedSet.insert(category, result);
                 }
 
             }

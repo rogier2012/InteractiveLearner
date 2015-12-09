@@ -11,6 +11,8 @@ public class TrainedSet {
 
     // Map of Category name + Map of word and number of documents its in.
     private Map<String,Map<String, Integer>> wordCount;
+
+    // Map of category name + number of documents in that category.
     private Map<String, Integer> totalDocuments;
 
     public Map<String, Map<String, Integer>> getWordCount() {

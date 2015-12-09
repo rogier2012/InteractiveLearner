@@ -6,10 +6,7 @@ import model.TrainedSet;
 import view.TesterView;
 
 import javax.swing.*;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Math.log;
 
@@ -38,20 +35,29 @@ public class TesterController implements PanelController{
     public void test(TrainedSet trainedSet, TestImportedDataSet dataSet) {
         System.out.println(dataSet.getData().size());
         Map<String, Map<String, Integer>> trainedMap = trainedSet.getWordCount();
-        double propClass = 1/((double)(trainedMap.keySet().size()));
+        double propClass = 1/((double)(trainedMap.size()));
 
         for (String document : dataSet.getData()) {
             Map<String, Double> resultPropabiltyOfDocument = new HashMap<String, Double>();
-            List<String> stringList = Arrays.asList(document.split("\\s+"));
+            Set<String> stringSet = new HashSet<>(Arrays.asList(document.split("\\s+")));
+            Set<String> stringList = new HashSet<>();
+            for (String string1: stringSet){
+                String result = string1.toLowerCase();
+                result = result.replaceAll("[^a-zA-Z]+", "");
+                if (!result.equals("")){
+                    stringList.add(result);
+                }
+
+            }
             Map<String, Double> resultProb = new HashMap<String, Double>();
             for(String category : trainedMap.keySet()){
                 double totalDocumentCount = trainedSet.getDocumentCount(category);
                 resultProb.put(category, 1.0);
                 for(String word : stringList){
                     if(trainedMap.get(category).get(word) != null){
-                        double calculatedval = ((double)trainedMap.get(category).get(word)+ 1.0 )/((double)totalDocumentCount+2.0);
-                        System.out.println(log(calculatedval));
-                        double newval = resultProb.get(category) + log(calculatedval);
+                        double calculatedVal = ((double)trainedMap.get(category).get(word)+ 1 )/(totalDocumentCount+2);
+//                        System.out.println(log(calculatedval));
+                        double newval = resultProb.get(category) + log(calculatedVal);
                         resultProb.replace(category, newval);
 
                     }
@@ -78,7 +84,7 @@ public class TesterController implements PanelController{
         double result = -Double.MAX_VALUE;
         String resultClass = "ERROR IN GETHIGHESTPROP";
         for (String category : resultPropabiltyOfDocument.keySet()) {
-
+            System.out.println("Probability of " + category + ": "+resultPropabiltyOfDocument.get(category));
             if (resultPropabiltyOfDocument.get(category) > result) {
                 result = resultPropabiltyOfDocument.get(category);
                 resultClass = category;
