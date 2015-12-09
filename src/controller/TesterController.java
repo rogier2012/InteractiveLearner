@@ -54,13 +54,18 @@ public class TesterController implements PanelController{
                 double totalDocumentCount = trainedSet.getDocumentCount(category);
                 resultProb.put(category, 1.0);
                 for(String word : stringList){
-                    if(trainedMap.get(category).get(word) != null){
-                        double calculatedVal = ((double)trainedMap.get(category).get(word)+ 1 )/(totalDocumentCount+2);
-//                        System.out.println(log(calculatedval));
-                        double newval = resultProb.get(category) + log(calculatedVal);
-                        resultProb.replace(category, newval);
-
+                    int value = 0;
+                    if (trainedMap.get(category).get(word) != null){
+                         value = trainedMap.get(category).get(word);
                     }
+
+
+                    double calculatedVal = ((double)value+ 1 )/(totalDocumentCount+2);
+//                        System.out.println(log(calculatedval));
+                    double newval = resultProb.get(category) + log(calculatedVal);
+                    resultProb.replace(category, newval);
+
+
 
                 }
 

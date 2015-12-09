@@ -43,7 +43,7 @@ public class TrainedSet {
             Map<String, Integer> word1 = new HashMap<>();
             word1.put(word, 1);
             wordCount.put(category, word1);
-            totalDocuments.put(category, 1);
+
         } else {
             if (!wordCount.get(category).containsKey(word)){
                 wordCount.get(category).put(word,1);
@@ -51,6 +51,18 @@ public class TrainedSet {
                 int value = wordCount.get(category).get(word);
                 wordCount.get(category).replace(word,value + 1);
             }
+
+        }
+    }
+
+    public void insertDocument(String category){
+        if (totalDocuments == null){
+            totalDocuments = new HashMap<>();
+        }
+
+        if (!totalDocuments.containsKey(category)) {
+            totalDocuments.put(category, 1);
+        } else {
             totalDocuments.replace(category,totalDocuments.get(category)+1);
         }
     }

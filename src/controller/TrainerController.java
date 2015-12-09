@@ -41,6 +41,7 @@ public class TrainerController implements PanelController{
                 }
 
             }
+            trainedSet.insertDocument(category);
         }
       }
 
