@@ -45,27 +45,25 @@ public class TesterController implements PanelController{
 
             List<String> stringList = Arrays.asList(document.split("\\s+"));
             Map<String, Double> resultProb = new HashMap<String, Double>();
-            for(String clss : trainedMap.keySet()){
-                int totalwordcount = 0;
-                for(String key : trainedMap.get(clss).keySet()) {
-                    totalwordcount += trainedMap.get(clss).get(key);
-                }
-                resultProb.put(clss, 0.0);
+            for(String category : trainedMap.keySet()){
+                double totalDocumentCount = trainedSet.getDocumentCount(category);
+                resultProb.put(category, 0.0);
                 for(String word : stringList){
-                    if(trainedMap.get(clss).get(word) != null){
-                        double calculatedval = trainedMap.get(clss).get(word)/((double)totalwordcount);
-                        double newval = resultProb.get(clss) + log(calculatedval);
-                        resultProb.replace(clss, newval);
+                    if(trainedMap.get(category).get(word) != null){
+                        double calculatedval = ((double)trainedMap.get(category).get(word)+ 1.0 )/((double)totalDocumentCount+2.0);
+                        System.out.println(log(calculatedval));
+                        double newval = resultProb.get(category) + log(calculatedval);
+                        resultProb.replace(category, newval);
 
                     }
 
                 }
 
-                double newval = resultProb.get(clss) + log(propClass);
+                double newval = resultProb.get(category) + log(propClass);
 //                System.out.println(newval);
-                resultProb.replace(clss, newval);
+                resultProb.replace(category, newval);
 //                System.out.println(clss);
-                resultPropabiltyOfDocument.put(clss, resultProb.get(clss));
+                resultPropabiltyOfDocument.put(category, resultProb.get(category));
 
             }
             String resultclass = getHighestProp(resultPropabiltyOfDocument);
@@ -82,9 +80,7 @@ public class TesterController implements PanelController{
     public String getHighestProp( Map<String, Double> resultPropabiltyOfDocument){
         double result = -Integer.MIN_VALUE;
         String resultclass = "ERROR IN GETHIGHESTPROP";
-        System.out.println(resultPropabiltyOfDocument.keySet().size());
         for(String clss : resultPropabiltyOfDocument.keySet()){
-
             result =  Math.max(result, resultPropabiltyOfDocument.get(clss));
             if(resultPropabiltyOfDocument.get(clss) == result){
                 resultclass = clss;
