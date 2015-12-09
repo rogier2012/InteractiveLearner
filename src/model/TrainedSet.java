@@ -11,27 +11,45 @@ public class TrainedSet {
 
     // Map of Category name + Map of word and number of documents its in.
     private Map<String,Map<String, Integer>> wordCount;
+    private Map<String, Integer> totalDocuments;
 
     public Map<String, Map<String, Integer>> getWordCount() {
         return wordCount;
     }
 
-    public void insert(String clss, String word){
+    public Map<String, Integer> getTotalDocuments(){
+        return totalDocuments;
+    }
+
+    public double getDocumentCount(String category){
+        double result = 0;
+        if (totalDocuments.containsKey(category)) {
+            result = totalDocuments.get(category);
+        }
+        return result;
+    }
+
+    public void insert(String category, String word){
         if (wordCount == null){
             wordCount = new HashMap<>();
         }
+        if (totalDocuments == null){
+            totalDocuments = new HashMap<>();
+        }
 
-        if (!wordCount.containsKey(clss)){
+        if (!wordCount.containsKey(category)){
             Map<String, Integer> word1 = new HashMap<>();
             word1.put(word, 1);
-            wordCount.put(clss, word1);
+            wordCount.put(category, word1);
+            totalDocuments.put(category, 1);
         } else {
-            if (!wordCount.get(clss).containsKey(word)){
-                wordCount.get(clss).put(word,1);
+            if (!wordCount.get(category).containsKey(word)){
+                wordCount.get(category).put(word,1);
             } else {
-                int value = wordCount.get(clss).get(word);
-                wordCount.get(clss).replace(word,value + 1);
+                int value = wordCount.get(category).get(word);
+                wordCount.get(category).replace(word,value + 1);
             }
+            totalDocuments.replace(category,totalDocuments.get(category)+1);
         }
     }
 }
