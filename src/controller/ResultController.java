@@ -1,6 +1,7 @@
 package controller;
 
 import model.ResultSet;
+import model.TestImportedDataSet;
 import model.TestedSet;
 import view.ResultView;
 
@@ -29,7 +30,7 @@ public class ResultController implements PanelController{
         return resultView;
     }
 
-    public void displayResults(TestedSet testedSet){
-        resultView.displayDocuments(testedSet.getResult());
+    public void displayResults(TestedSet testedSet, TestImportedDataSet importedDataSet) {
+        resultView.displayDocuments(testedSet.getResult(), importedDataSet);
     }
 }

@@ -66,6 +66,7 @@ public class TestImportController implements PanelController,ActionListener {
                 Enumeration<? extends ZipEntry> entries = zipFile.entries();
                 while (entries.hasMoreElements()){
                     ZipEntry zipEntry = entries.nextElement();
+                    testImportedDataSet.addFileName(zipEntry.getName());
                     testImportedDataSet.addUnclassifiedDocument(FileUtils.fileToString(zipFile,zipEntry));
                 }
 

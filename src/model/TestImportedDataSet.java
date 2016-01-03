@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class TestImportedDataSet {
     private List<String> data;
+    private List<String> fileNames;
 
     public void addUnclassifiedDocument(String document){
         if(data == null){
@@ -20,4 +21,15 @@ public class TestImportedDataSet {
         return data;
     }
 
+
+    public void addFileName(String filename) {
+        if (fileNames == null) {
+            fileNames = new ArrayList<>();
+        }
+        fileNames.add(filename);
+    }
+
+    public List<String> getFileNames() {
+        return fileNames;
+    }
 }

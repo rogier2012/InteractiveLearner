@@ -1,5 +1,7 @@
 package view;
 
+import model.TestImportedDataSet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
@@ -29,9 +31,9 @@ public class ResultView extends JPanel{
         this.add(scrollPane, gbc);
     }
 
-    public void displayDocuments(Map<String, String> testedSet){
+    public void displayDocuments(Map<String, String> testedSet, TestImportedDataSet importedDataSet) {
         for (String document : testedSet.keySet()){
-            textArea.append("Class: " + testedSet.get(document) + " Document: " + document + "\n");
+            textArea.append("Class: " + testedSet.get(document) + " Document: " + importedDataSet.getFileNames().get(importedDataSet.getData().indexOf(document)) + "\n");
 
         }
     }

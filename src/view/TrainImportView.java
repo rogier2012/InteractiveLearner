@@ -117,19 +117,6 @@ public class TrainImportView extends JPanel {
         repaint();
     }
 
-    public JButton getFileButton() {
-        return fileButton;
-    }
-
-
-    public JTextField getTextField() {
-        return textField;
-    }
-
-    public int getCurrentCategory() {
-        return categories.getSelectedIndex() + 1;
-    }
-
     public List<JButton> getFileButtonList() {
         return fileButtonList;
     }
