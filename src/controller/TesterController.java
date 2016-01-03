@@ -61,7 +61,6 @@ public class TesterController implements PanelController{
 
 
                     double calculatedVal = ((double)value+ 1 )/(totalDocumentCount+2);
-//                        System.out.println(log(calculatedval));
                     double newval = resultProb.get(category) + log(calculatedVal);
                     resultProb.replace(category, newval);
 
@@ -78,7 +77,6 @@ public class TesterController implements PanelController{
             testedSet.addClassifiedDocument(resultclass, document);
 
         }
-        System.out.println(testedSet.getResult().size());
     }
 
     public TestedSet getTestedSet() {
@@ -89,7 +87,6 @@ public class TesterController implements PanelController{
         double result = -Double.MAX_VALUE;
         String resultClass = "ERROR IN GETHIGHESTPROP";
         for (String category : resultPropabiltyOfDocument.keySet()) {
-            System.out.println("Probability of " + category + ": "+resultPropabiltyOfDocument.get(category));
             if (resultPropabiltyOfDocument.get(category) > result) {
                 result = resultPropabiltyOfDocument.get(category);
                 resultClass = category;

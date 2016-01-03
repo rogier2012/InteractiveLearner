@@ -4,26 +4,37 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rogier on 25-11-15
  */
 public class TrainImportView extends JPanel {
-    private JButton fileButton1;
-    private JButton fileButton2;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JButton nextButton;
+    private JButton fileButton;
+    private JTextField textField;
+    private List<JButton> fileButtonList;
+    private List<JTextField> textFieldList;
+    private JComboBox<String> categories;
 
+    private JButton nextButton;
+    private int categoryAmount;
 
     public TrainImportView() {
         super(new GridBagLayout());
+        fileButtonList = new ArrayList<>();
+        textFieldList = new ArrayList<>();
     }
 
     public void addButtonActionListener(ActionListener actionListener){
-        fileButton1.addActionListener(actionListener);
-        fileButton2.addActionListener(actionListener);
+//        fileButton1.addActionListener(actionListener);
+        if (fileButtonList != null) {
+            for (JButton button : fileButtonList) {
+                button.addActionListener(actionListener);
+            }
+        }
     }
 
     public void addNextButtonListener(ActionListener actionListener){
@@ -32,103 +43,114 @@ public class TrainImportView extends JPanel {
 
     public void setupGUI(){
         GridBagConstraints gbc = new GridBagConstraints();
-        textField1 = new JTextField();
+        categories = new JComboBox<>();
+        for (int i = 1; i <= categoryAmount; i++) {
+            categories.addItem("Class " + i);
+        }
+        categories.setSelectedIndex(0);
+        categories.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TrainImportView.this.setButtonAndTextField();
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        this.add(categories, gbc);
+        for (int i = 0; i < categoryAmount; i++) {
+            fileButtonList.add(new JButton("Import " + (i + 1)));
+            textFieldList.add(new JTextField());
+        }
+        gbc = new GridBagConstraints();
+        textField = textFieldList.get(categories.getSelectedIndex());
         gbc.ipadx = 100;
         gbc.ipady = 10;
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        this.add(textField1, gbc);
-        fileButton1 = new JButton("Import 1");
-        fileButton1.setEnabled(false);
+        gbc.gridy = 1;
+        this.add(textField, gbc);
+        fileButton = fileButtonList.get(categories.getSelectedIndex());
+        fileButton.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        this.add(fileButton1, gbc);
-        textField2 = new JTextField();
-        gbc = new GridBagConstraints();
-        gbc.ipadx = 100;
-        gbc.ipady = 10;
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        this.add(textField2, gbc);
-        fileButton2 = new JButton("Import 2");
-        fileButton2.setEnabled(false);
-        gbc = new GridBagConstraints();
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        this.add(fileButton2, gbc);
+        gbc.gridy = 2;
+        this.add(fileButton, gbc);
         nextButton = new JButton("Next");
         nextButton.setEnabled(false);
         gbc = new GridBagConstraints();
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         this.add(nextButton, gbc);
 
     }
 
-    public JButton getFileButton1(){
-        return fileButton1;
+
+    public void setButtonAndTextField() {
+        textField = textFieldList.get(categories.getSelectedIndex());
+        fileButton = fileButtonList.get(categories.getSelectedIndex());
+        this.revalidate();
+
+
     }
 
-    public JButton getFileButton2(){
-        return fileButton2;
+    public JButton getFileButton() {
+        return fileButton;
     }
 
-    public JTextField getTextField1() {
-        return textField1;
+
+    public JTextField getTextField() {
+        return textField;
     }
 
-    public JTextField getTextField2() {
-        return textField2;
+    public int getCurrentCategory() {
+        return categories.getSelectedIndex() + 1;
+    }
+
+    public List<JButton> getFileButtonList() {
+        return fileButtonList;
+    }
+
+
+    public String getText(int index) {
+        return textFieldList.get(index).getText();
     }
 
     public void setNextButtonEnabled(boolean active){
         nextButton.setEnabled(active);
     }
 
-    public void addDocumentListener(){
-        textField1.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                fileButton1.setEnabled(true);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if (e.getDocument().getLength() == 0){
-                    fileButton1.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
-        textField2.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                fileButton2.setEnabled(true);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                if (e.getDocument().getLength() == 0){
-                    fileButton2.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-
-            }
-        });
+    public void setCategoryAmount(int categoryAmount) {
+        this.categoryAmount = categoryAmount;
     }
+
+    public void addDocumentListener(){
+        if (textFieldList != null && fileButtonList != null) {
+            for (JTextField jTextField : textFieldList) {
+                JButton fileButton = fileButtonList.get(textFieldList.indexOf(jTextField));
+                jTextField.getDocument().addDocumentListener(new DocumentListener() {
+
+                    @Override
+                    public void insertUpdate(DocumentEvent e) {
+                        fileButton.setEnabled(true);
+                    }
+
+                    @Override
+                    public void removeUpdate(DocumentEvent e) {
+                        if (e.getDocument().getLength() == 0) {
+                            fileButton.setEnabled(false);
+                        }
+                    }
+
+                    @Override
+                    public void changedUpdate(DocumentEvent e) {
+                    }
+                });
+            }
+        }
+    }
+
 
 }

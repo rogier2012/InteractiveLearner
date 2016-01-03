@@ -23,11 +23,8 @@ public class LearnerController implements ActionListener{
     public LearnerController() {
         this.setupGUI();
         trainImportController = new TrainImportController();
-        trainImportController.addNextButtonListener(this);
-        //for now
-        this.nextPanel(trainImportController);
-        status = 1;
-        //
+
+
         trainerControllerl = new TrainerController();
         testImportController = new TestImportController();
         testImportController.addNextButtonListener(this);
@@ -39,9 +36,11 @@ public class LearnerController implements ActionListener{
     public void setupGUI(){
         frame = new JFrame();
         homeView = new HomeView();
-//        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        homeView.setupGUI();
+        homeView.addNextButtonActionListener(this);
         frame.setSize(500,500);
-//        frame.setContentPane(homeView);
+        frame.setContentPane(homeView);
+        status = 0;
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
@@ -53,7 +52,13 @@ public class LearnerController implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (status == 1){
+        if (status == 0) {
+            int categoryAmount = homeView.getCategoryAmount();
+            trainImportController.setCategoryAmount(categoryAmount);
+            trainImportController.addNextButtonListener(this);
+            this.nextPanel(trainImportController);
+            status = 1;
+        } else if (status == 1) {
 //            this.nextPanel(trainerControllerl);
             trainerControllerl.train(trainImportController.getData());
             this.nextPanel(testImportController);
