@@ -52,6 +52,7 @@ public class TrainImportView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 TrainImportView.this.setButtonAndTextField();
+
             }
         });
         gbc.gridx = 0;
@@ -89,11 +90,31 @@ public class TrainImportView extends JPanel {
 
 
     public void setButtonAndTextField() {
+        this.remove(textField);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.ipadx = 100;
+        gbc.ipady = 10;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
         textField = textFieldList.get(categories.getSelectedIndex());
+        this.add(textField, gbc);
+
+        this.remove(fileButton);
+        gbc = new GridBagConstraints();
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+
         fileButton = fileButtonList.get(categories.getSelectedIndex());
-        this.revalidate();
+        if (textField.getText().length() == 0) {
+            fileButton.setEnabled(false);
+        }
+        this.add(fileButton, gbc);
 
 
+        revalidate();
+        repaint();
     }
 
     public JButton getFileButton() {
