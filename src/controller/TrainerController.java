@@ -91,5 +91,22 @@ public class TrainerController implements PanelController{
         }
 
 
+        for (String category : chiSquares.keySet()) {
+            Map.Entry<String, Integer> maxEntry = null;
+            for (int i = 0; i < 100; i++) {
+                for (Map.Entry<String, Integer> entry : chiSquares.get(category).entrySet()) {
+                    if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+                        maxEntry = entry;
+                        System.out.println(entry.getValue());
+                        chiSquares.get(category).remove(entry);
+                        trainedSet.filteredInsert(category, entry.getKey(), wordCount.get(category).get(entry.getKey()));
+                    }
+                }
+            }
+
+        }
+
+
+
     }
 }

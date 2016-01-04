@@ -80,7 +80,7 @@ public class TrainedSet {
 
 
     public void filteredInsert(String category, String word, int count) {
-        if (wordCount == null) {
+        if (filteredWordCount == null) {
             filteredWordCount = new HashMap<>();
         }
 
