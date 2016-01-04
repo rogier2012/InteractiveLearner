@@ -87,15 +87,12 @@ public class TrainedSet {
 
         if (!filteredWordCount.containsKey(category)) {
             Map<String, Integer> stringIntegerHashMap = new HashMap<>();
-            stringIntegerHashMap.put(word, 1);
+            stringIntegerHashMap.put(word, count);
             filteredWordCount.put(category, stringIntegerHashMap);
 
         } else {
             if (!filteredWordCount.get(category).containsKey(word)) {
-                filteredWordCount.get(category).put(word, 1);
-            } else {
-                int value = wordCount.get(category).get(word);
-                filteredWordCount.get(category).replace(word, value + 1);
+                filteredWordCount.get(category).put(word, count);
             }
 
         }
