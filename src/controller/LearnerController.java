@@ -1,5 +1,6 @@
 package controller;
 
+import model.TrainImportedDataSet;
 import view.HomeView;
 
 import javax.swing.*;
@@ -30,6 +31,7 @@ public class LearnerController implements ActionListener{
         testImportController.addNextButtonListener(this);
         testerController = new TesterController();
         resultController = new ResultController();
+        resultController.addNextButtonListener(this);
 //        this.nextPanel(null);
     }
 
@@ -69,6 +71,13 @@ public class LearnerController implements ActionListener{
             this.nextPanel(resultController);
             resultController.displayResults(testerController.getTestedSet(), testImportController.getDataSet());
             status = 5;
+        } else if (status == 5) {
+            this.nextPanel(feedBackController);
+            status = 6;
+        } else if (status == 6) {
+            trainerControllerl.train(new TrainImportedDataSet(feedBackController.getFeedBackSet().getData()));
+            testImportController.removeTestData();
+            this.nextPanel(testImportController);
         }
     }
 }

@@ -22,4 +22,8 @@ public class FeedBackController implements PanelController{
     public JPanel getView() {
         return null;
     }
+
+    public FeedBackSet getFeedBackSet() {
+        return feedBackSet;
+    }
 }

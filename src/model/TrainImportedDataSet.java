@@ -11,15 +11,19 @@ import java.util.Map;
 public class TrainImportedDataSet {
     private Map<String, List<String>> data;
 
+    public TrainImportedDataSet(Map<String, List<String>> data) {
+        this.data = data;
+    }
+
+    public TrainImportedDataSet() {
+        data = new HashMap<>();
+    }
+
     public Map<String, List<String>> getData() {
         return data;
     }
 
     public void addDocument(String clss, String document){
-
-        if (data == null){
-            data = new HashMap<>();
-        }
 
         if (!data.containsKey(clss)){
             List<String> list = new ArrayList<>();

@@ -6,6 +6,7 @@ import model.TestedSet;
 import view.ResultView;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Rogier on 30-11-15
@@ -32,5 +33,9 @@ public class ResultController implements PanelController{
 
     public void displayResults(TestedSet testedSet, TestImportedDataSet importedDataSet) {
         resultView.displayDocuments(testedSet.getResult(), importedDataSet);
+    }
+
+    public void addNextButtonListener(ActionListener actionListener) {
+        resultView.addNextButtonActionListener(actionListener);
     }
 }

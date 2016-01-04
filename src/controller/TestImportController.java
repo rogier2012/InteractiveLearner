@@ -41,6 +41,10 @@ public class TestImportController implements PanelController,ActionListener {
         return testImportedDataSet;
     }
 
+    public void removeTestData() {
+        testImportedDataSet = new TestImportedDataSet();
+    }
+
     public void addNextButtonListener(ActionListener actionListener){
         testImportView.addNextButtonActionListener(actionListener);
     }

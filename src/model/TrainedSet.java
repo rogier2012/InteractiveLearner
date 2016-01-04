@@ -31,6 +31,12 @@ public class TrainedSet {
         return result;
     }
 
+    public void removeWord(String category, String word) {
+        if (wordCount.containsKey(category) && wordCount.get(category).containsKey(word)) {
+            wordCount.get(category).remove(word);
+        }
+    }
+
     public void insert(String category, String word){
         if (wordCount == null){
             wordCount = new HashMap<>();

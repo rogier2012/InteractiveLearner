@@ -4,6 +4,8 @@ import model.TestImportedDataSet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
@@ -11,7 +13,8 @@ import java.util.Map;
  */
 public class ResultView extends JPanel{
     private JTextArea textArea;
-
+    private JButton nextButton;
+    private JButton stopButton;
 
     public ResultView() {
         super(new GridBagLayout());
@@ -29,6 +32,24 @@ public class ResultView extends JPanel{
         gbc.weighty = 1;
         JScrollPane scrollPane = new JScrollPane(textArea);
         this.add(scrollPane, gbc);
+        gbc = new GridBagConstraints();
+        nextButton = new JButton("Next");
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+
+        this.add(nextButton, gbc);
+        gbc = new GridBagConstraints();
+        stopButton = new JButton("Stop");
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.add(stopButton, gbc);
+
     }
 
     public void displayDocuments(Map<String, String> testedSet, TestImportedDataSet importedDataSet) {
@@ -36,5 +57,9 @@ public class ResultView extends JPanel{
             textArea.append("Class: " + testedSet.get(document) + " Document: " + importedDataSet.getFileNames().get(importedDataSet.getData().indexOf(document)) + "\n");
 
         }
+    }
+
+    public void addNextButtonActionListener(ActionListener actionListener) {
+        nextButton.addActionListener(actionListener);
     }
 }

@@ -24,8 +24,6 @@ public class TrainImportController implements ActionListener, PanelController {
     public TrainImportController() {
         trainImportView = new TrainImportView();
         trainImportedDataSet = new TrainImportedDataSet();
-
-
     }
 
     @Override
@@ -50,14 +48,17 @@ public class TrainImportController implements ActionListener, PanelController {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                Enumeration<? extends ZipEntry> entries = zipFile.entries();
-                while (entries.hasMoreElements()){
-                    ZipEntry zipEntry = entries.nextElement();
-                    trainImportedDataSet.addDocument(category, FileUtils.fileToString(zipFile, zipEntry));
+                if (zipFile != null) {
+                    Enumeration<? extends ZipEntry> entries = zipFile.entries();
+                    while (entries.hasMoreElements()) {
+                        ZipEntry zipEntry = entries.nextElement();
+                        trainImportedDataSet.addDocument(category, FileUtils.fileToString(zipFile, zipEntry));
+                    }
+                    if (trainImportedDataSet.getData().size() == categoryAmount) {
+                        trainImportView.setNextButtonEnabled(true);
+                    }
                 }
-                if (trainImportedDataSet.getData().size() == categoryAmount) {
-                    trainImportView.setNextButtonEnabled(true);
-                }
+
             }
 
         }
