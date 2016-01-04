@@ -1,5 +1,7 @@
 package view;
 
+import model.TestImportedDataSet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -15,6 +17,7 @@ public class FeedBackView extends JPanel{
     private List<ButtonGroup> radioButtonList;
     private JScrollPane scrollPane;
     private JButton nextButton;
+    private JPanel panel;
 
     public FeedBackView() {
         super(new GridBagLayout());
@@ -24,14 +27,15 @@ public class FeedBackView extends JPanel{
 
     public void setupGUI(){
         GridBagConstraints gbc = new GridBagConstraints();
-
+        panel = new JPanel(new GridBagLayout());
+        System.out.println(panel.getWidth());
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.BOTH;
 
         gbc.weightx = 1;
         gbc.weighty = 1;
-        scrollPane = new JScrollPane();
+        scrollPane = new JScrollPane(panel);
         this.add(scrollPane, gbc);
         gbc = new GridBagConstraints();
         nextButton = new JButton("Next");
@@ -42,13 +46,21 @@ public class FeedBackView extends JPanel{
     }
 
 
-    public void displayResults(Map<String, String> results, List<String> categories, ActionListener actionListener) {
+    public void displayResults(Map<String, String> results, List<String> categories, TestImportedDataSet importedDataSet) {
+        int iterator = 0;
+        GridBagConstraints gbc;
         for (String document : results.keySet()) {
+            gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = iterator;
+//            gbc.fill = GridBagConstraints.HORIZONTAL;
+
             documentList.add(document);
             JTextArea area = new JTextArea();
-            area.append(document);
-            area.setLineWrap(true);
-            scrollPane.add(area);
+            area.append(importedDataSet.getFileNames().get(importedDataSet.getData().indexOf(document)));
+
+            panel.add(area, gbc);
+            iterator++;
             List<JRadioButton> radioButtons = new ArrayList<>();
             for (String category : categories) {
                 JRadioButton radioButton = new JRadioButton(category);
@@ -60,17 +72,29 @@ public class FeedBackView extends JPanel{
 //                radioButton.addActionListener(actionListener);
             }
             ButtonGroup buttonGroup = new ButtonGroup();
-            JPanel radioPanel = new JPanel(new GridLayout(0, 1));
-
+            JPanel radioPanel = new JPanel(new GridBagLayout());
+            int radio = 0;
             for (JRadioButton button : radioButtons) {
+                GridBagConstraints gridBagConstraints = new GridBagConstraints();
+                gridBagConstraints.gridx = radio;
+                gridBagConstraints.gridy = 0;
                 buttonGroup.add(button);
-                radioPanel.add(button);
+                radioPanel.add(button, gridBagConstraints);
+                radio++;
             }
             radioButtonList.add(buttonGroup);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = iterator;
+//            gbc.fill = GridBagConstraints.HORIZONTAL;
 
-            scrollPane.add(radioPanel);
 
+            panel.add(radioPanel, gbc);
+            iterator++;
         }
+
+        revalidate();
+        repaint();
     }
 
     public List<String> getDocumentList() {

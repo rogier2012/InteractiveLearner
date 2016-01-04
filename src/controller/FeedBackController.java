@@ -1,6 +1,7 @@
 package controller;
 
 import model.FeedBackSet;
+import model.TestImportedDataSet;
 import view.FeedBackView;
 
 import javax.swing.*;
@@ -37,14 +38,14 @@ public class FeedBackController implements PanelController, ActionListener {
         List<String> documentList = feedBackView.getDocumentList();
         List<ButtonGroup> buttonGroupList = feedBackView.getRadioButtonList();
         for (String document : documentList) {
-            feedBackSet.insert(document, ((JRadioButton) buttonGroupList.get(documentList.indexOf(document)).getSelection()).getText());
+            feedBackSet.insert(document, buttonGroupList.get(documentList.indexOf(document)).getSelection().getActionCommand());
         }
 
         return feedBackSet;
     }
 
-    public void feedback(Map<String, String> results, List<String> categories) {
-        feedBackView.displayResults(results, categories, this);
+    public void feedback(Map<String, String> results, List<String> categories, TestImportedDataSet importedDataSet) {
+        feedBackView.displayResults(results, categories, importedDataSet);
     }
 
     public void addNextButtonListener(ActionListener actionListener) {

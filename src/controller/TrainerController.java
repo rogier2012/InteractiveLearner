@@ -44,15 +44,15 @@ public class TrainerController implements PanelController{
                 trainedSet.insertDocument(category);
             }
         }
-        Map<String, Map<String, Integer>> wordCount = trainedSet.getWordCount();
-        for (String category : wordCount.keySet()) {
-            for (String word : wordCount.get(category).keySet()) {
-                int i = wordCount.get(category).get(word);
-                if (i <= 3) {
-                    trainedSet.removeWord(category, word);
-                }
-            }
-        }
+//        Map<String, Map<String, Integer>> wordCount = trainedSet.getWordCount();
+//        for (String category : wordCount.keySet()) {
+//            for (String word : wordCount.get(category).keySet()) {
+//                int i = wordCount.get(category).get(word);
+//                if (i <= 3) {
+//                    trainedSet.removeWord(category, word);
+//                }
+//            }
+//        }
     }
 
     public TrainedSet getTrainedSet() {

@@ -77,7 +77,7 @@ public class LearnerController implements ActionListener{
             status = 5;
         } else if (status == 5) {
             this.nextPanel(feedBackController);
-            feedBackController.feedback(testerController.getTestedSet().getResult(), new ArrayList<String>(trainerControllerl.getTrainedSet().getWordCount().keySet()));
+            feedBackController.feedback(testerController.getTestedSet().getResult(), new ArrayList<>(trainerControllerl.getTrainedSet().getWordCount().keySet()), testImportController.getDataSet());
             status = 6;
         } else if (status == 6) {
             trainerControllerl.train(new TrainImportedDataSet(feedBackController.getFeedBackSet().getData()));
