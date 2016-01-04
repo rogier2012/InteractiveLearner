@@ -28,7 +28,7 @@ public class FeedBackView extends JPanel{
     public void setupGUI(){
         GridBagConstraints gbc = new GridBagConstraints();
         panel = new JPanel(new GridBagLayout());
-        System.out.println(panel.getWidth());
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.BOTH;
@@ -47,6 +47,7 @@ public class FeedBackView extends JPanel{
 
 
     public void displayResults(Map<String, String> results, List<String> categories, TestImportedDataSet importedDataSet) {
+
         int iterator = 0;
         GridBagConstraints gbc;
         for (String document : results.keySet()) {
@@ -69,7 +70,6 @@ public class FeedBackView extends JPanel{
                     radioButton.setSelected(true);
                 }
                 radioButtons.add(radioButton);
-//                radioButton.addActionListener(actionListener);
             }
             ButtonGroup buttonGroup = new ButtonGroup();
             JPanel radioPanel = new JPanel(new GridBagLayout());
@@ -92,9 +92,6 @@ public class FeedBackView extends JPanel{
             panel.add(radioPanel, gbc);
             iterator++;
         }
-
-        revalidate();
-        repaint();
     }
 
     public List<String> getDocumentList() {

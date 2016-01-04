@@ -25,18 +25,7 @@ public class LearnerController implements ActionListener{
     public LearnerController() {
         this.setupGUI();
         trainImportController = new TrainImportController();
-
-
         trainerControllerl = new TrainerController();
-        testImportController = new TestImportController();
-        testImportController.addNextButtonListener(this);
-        testerController = new TesterController();
-        resultController = new ResultController();
-        resultController.addNextButtonListener(this);
-        feedBackController = new FeedBackController();
-        feedBackController.addNextButtonListener(this);
-
-//        this.nextPanel(null);
     }
 
     public void setupGUI(){
@@ -67,21 +56,29 @@ public class LearnerController implements ActionListener{
         } else if (status == 1) {
 //            this.nextPanel(trainerControllerl);
             trainerControllerl.train(trainImportController.getData());
+            testImportController = new TestImportController();
+            testImportController.addNextButtonListener(this);
             this.nextPanel(testImportController);
             status = 3;
         } else if (status == 3){
 //            this.nextPanel(testerController);
+            testerController = new TesterController();
             testerController.test(trainerControllerl.getTrainedSet(),testImportController.getDataSet());
+            resultController = new ResultController();
+            resultController.addNextButtonListener(this);
             this.nextPanel(resultController);
             resultController.displayResults(testerController.getTestedSet(), testImportController.getDataSet());
             status = 5;
         } else if (status == 5) {
+            feedBackController = new FeedBackController();
+            feedBackController.addNextButtonListener(this);
             this.nextPanel(feedBackController);
             feedBackController.feedback(testerController.getTestedSet().getResult(), new ArrayList<>(trainerControllerl.getTrainedSet().getWordCount().keySet()), testImportController.getDataSet());
             status = 6;
         } else if (status == 6) {
             trainerControllerl.train(new TrainImportedDataSet(feedBackController.getFeedBackSet().getData()));
-            testImportController.removeTestData();
+            testImportController = new TestImportController();
+            testImportController.addNextButtonListener(this);
             this.nextPanel(testImportController);
             status = 3;
         }

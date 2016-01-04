@@ -12,8 +12,12 @@ public class TrainedSet {
     // Map of Category name + Map of word and number of documents its in.
     private Map<String,Map<String, Integer>> wordCount;
 
+    private Map<String, Map<String, Integer>> filteredWordCount;
+
     // Map of category name + number of documents in that category.
     private Map<String, Integer> totalDocuments;
+
+    private Map<String, Integer> filteredTotalDocuments;
 
     public Map<String, Map<String, Integer>> getWordCount() {
         return wordCount;
@@ -31,11 +35,7 @@ public class TrainedSet {
         return result;
     }
 
-    public void removeWord(String category, String word) {
-        if (wordCount.containsKey(category) && wordCount.get(category).containsKey(word)) {
-            wordCount.get(category).remove(word);
-        }
-    }
+
 
     public void insert(String category, String word){
         if (wordCount == null){
@@ -70,6 +70,41 @@ public class TrainedSet {
             totalDocuments.put(category, 1);
         } else {
             totalDocuments.replace(category,totalDocuments.get(category)+1);
+        }
+    }
+
+
+    public void filteredInsert(String category, String word) {
+        if (wordCount == null) {
+            filteredWordCount = new HashMap<>();
+        }
+
+
+        if (!filteredWordCount.containsKey(category)) {
+            Map<String, Integer> stringIntegerHashMap = new HashMap<>();
+            stringIntegerHashMap.put(word, 1);
+            filteredWordCount.put(category, stringIntegerHashMap);
+
+        } else {
+            if (!filteredWordCount.get(category).containsKey(word)) {
+                filteredWordCount.get(category).put(word, 1);
+            } else {
+                int value = wordCount.get(category).get(word);
+                filteredWordCount.get(category).replace(word, value + 1);
+            }
+
+        }
+    }
+
+    public void filteredInsertDocument(String category) {
+        if (filteredTotalDocuments == null) {
+            filteredTotalDocuments = new HashMap<>();
+        }
+
+        if (!filteredTotalDocuments.containsKey(category)) {
+            filteredTotalDocuments.put(category, 1);
+        } else {
+            filteredTotalDocuments.replace(category, filteredTotalDocuments.get(category) + 1);
         }
     }
 }
