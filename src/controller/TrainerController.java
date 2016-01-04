@@ -52,6 +52,25 @@ public class TrainerController implements PanelController{
     }
 
     public void featureSelection() {
-        //doe chi square
+        Map<String, Map<String, Integer>> chiSquares = new HashMap<>();
+        Map<String, Map<String, Integer>> wordCount = trainedSet.getWordCount();
+        for (String category : wordCount.keySet()) {
+            chiSquares.put(category, new HashMap<>());
+            for (String word : wordCount.get(category).keySet()) {
+                int n11;
+                int n10;
+                int n01;
+                int n00;
+                double e11;
+                double e10;
+                double e01;
+                double e00;
+                int result;
+
+                chiSquares.get(category).put(word, result);
+            }
+        }
+
+
     }
 }
