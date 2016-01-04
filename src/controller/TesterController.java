@@ -34,7 +34,7 @@ public class TesterController implements PanelController{
 
     public void test(TrainedSet trainedSet, TestImportedDataSet dataSet) {
         System.out.println(dataSet.getData().size());
-        Map<String, Map<String, Integer>> trainedMap = trainedSet.getWordCount();
+        Map<String, Map<String, Integer>> trainedMap = trainedSet.getFilteredWordCount();
         double propClass = 1/((double)(trainedMap.size()));
 
         for (String document : dataSet.getData()) {
