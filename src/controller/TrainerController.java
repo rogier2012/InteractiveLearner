@@ -92,17 +92,19 @@ public class TrainerController implements PanelController{
 
 
         for (String category : chiSquares.keySet()) {
-            Map.Entry<String, Integer> maxEntry = null;
-            for (int i = 0; i < 100; i++) {
-                for (Map.Entry<String, Integer> entry : chiSquares.get(category).entrySet()) {
-                    if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
-                        maxEntry = entry;
-                        System.out.println(entry.getValue());
-                        chiSquares.get(category).remove(entry);
-                        trainedSet.filteredInsert(category, entry.getKey(), wordCount.get(category).get(entry.getKey()));
+            for (int i = 0; i < 10; i++) {
+                int highestValue = 0;
+                String highestWord = null;
+                for (String word : chiSquares.get(category).keySet()) {
+                    if (highestValue < chiSquares.get(category).get(word)) {
+                        highestValue = chiSquares.get(category).get(word);
+                        highestWord = word;
                     }
                 }
+                trainedSet.filteredInsert(category, highestWord, wordCount.get(category).get(highestWord));
+                chiSquares.get(category).remove(highestWord);
             }
+
 
         }
 
