@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Rogier on 25-11-15
  */
 public class TrainedSet {
-
+    private int total = 0;
 
     // Map of Category name + Map of word and number of documents its in.
     private Map<String,Map<String, Integer>> wordCount;
@@ -69,6 +69,7 @@ public class TrainedSet {
     }
 
     public void insertDocument(String category){
+        total++;
         if (totalDocuments == null){
             totalDocuments = new HashMap<>();
         }
@@ -113,5 +114,9 @@ public class TrainedSet {
         } else {
             filteredTotalDocuments.replace(category, filteredTotalDocuments.get(category) + 1);
         }
+    }
+
+    public int getTotal() {
+        return total;
     }
 }
