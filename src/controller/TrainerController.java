@@ -92,7 +92,7 @@ public class TrainerController implements PanelController{
         for (String category : chiSquares.keySet()) {
             Set<String> badwords = new HashSet<>();
             for (String word : chiSquares.get(category).keySet()) {
-                if (chiSquares.get(category).get(word) < 11) {
+                if (chiSquares.get(category).get(word) < 4) {
                     badwords.add(word);
                 }
             }
@@ -115,9 +115,9 @@ public class TrainerController implements PanelController{
         }
         for (String category : chiSquares.keySet()) {
             for (String word : chiSquares.get(category).keySet()) {
-                if (chiSquares.get(category).get(word) > 11) {
+
                     trainedSet.filteredInsert(category, word, wordCount.get(category).get(word));
-                }
+
             }
 //            int highestValue = 0;
 //            String highestWord = null;
@@ -133,7 +133,7 @@ public class TrainerController implements PanelController{
 
 
         }
-
+        System.out.println("Hallo");
 
 
     }

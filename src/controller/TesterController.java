@@ -1,5 +1,6 @@
 package controller;
 
+import helper.FileUtils;
 import model.TestImportedDataSet;
 import model.TestedSet;
 import model.TrainedSet;
@@ -41,10 +42,11 @@ public class TesterController implements PanelController{
             Map<String, Double> resultPropabiltyOfDocument = new HashMap<String, Double>();
             Set<String> stringSet = new HashSet<>(Arrays.asList(document.split("\\s+")));
             Set<String> stringList = new HashSet<>();
+            List<String> stopwords = Arrays.asList(FileUtils.stopwordList);
             for (String string1: stringSet){
                 String result = string1.toLowerCase();
                 result = result.replaceAll("[^a-zA-Z]+", "");
-                if (!result.equals("")){
+                if (!result.equals("") && !stopwords.contains(result)) {
                     stringList.add(result);
                 }
 
