@@ -89,8 +89,30 @@ public class TrainerController implements PanelController{
                 chiSquares.get(category).put(word, result);
             }
         }
-
-
+        for (String category : chiSquares.keySet()) {
+            Set<String> badwords = new HashSet<>();
+            for (String word : chiSquares.get(category).keySet()) {
+                if (chiSquares.get(category).get(word) < 11) {
+                    badwords.add(word);
+                }
+            }
+            for (String bad : badwords) {
+                chiSquares.get(category).remove(bad);
+            }
+        }
+        for (String category : chiSquares.keySet()) {
+            for (String category1 : chiSquares.keySet()) {
+                if (!category.equals(category1)) {
+                    for (String word : chiSquares.get(category).keySet()) {
+                        if (chiSquares.get(category1).containsKey(word)) {
+                            if (wordCount.get(category).get(word) > wordCount.get(category1).get(word)) {
+                                chiSquares.get(category1).remove(word);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         for (String category : chiSquares.keySet()) {
             for (String word : chiSquares.get(category).keySet()) {
                 if (chiSquares.get(category).get(word) > 11) {
