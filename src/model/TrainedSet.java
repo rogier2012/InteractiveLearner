@@ -2,7 +2,6 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Rogier on 25-11-15
@@ -24,10 +23,8 @@ public class TrainedSet {
         return wordCount;
     }
 
-    public Map<String, Map<String, Integer>> getConcurrentWordCount() {
-        Map<String, Map<String, Integer>> concurrentWordCount = new ConcurrentHashMap<String, Map<String, Integer>>();
-        concurrentWordCount.putAll(wordCount);
-        return concurrentWordCount;
+    public Map<String, Map<String, Integer>> getFilteredWordCount() {
+        return filteredWordCount;
     }
 
     public Map<String, Integer> getTotalDocuments(){
@@ -82,7 +79,7 @@ public class TrainedSet {
     }
 
 
-    public void filteredInsert(String category, String word) {
+    public void filteredInsert(String category, String word, int count) {
         if (wordCount == null) {
             filteredWordCount = new HashMap<>();
         }
