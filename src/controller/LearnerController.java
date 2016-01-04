@@ -6,6 +6,7 @@ import view.HomeView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by Rogier on 25-11-15
@@ -32,6 +33,9 @@ public class LearnerController implements ActionListener{
         testerController = new TesterController();
         resultController = new ResultController();
         resultController.addNextButtonListener(this);
+        feedBackController = new FeedBackController();
+        feedBackController.addNextButtonListener(this);
+
 //        this.nextPanel(null);
     }
 
@@ -73,11 +77,13 @@ public class LearnerController implements ActionListener{
             status = 5;
         } else if (status == 5) {
             this.nextPanel(feedBackController);
+            feedBackController.feedback(testerController.getTestedSet().getResult(), new ArrayList<String>(trainerControllerl.getTrainedSet().getWordCount().keySet()));
             status = 6;
         } else if (status == 6) {
             trainerControllerl.train(new TrainImportedDataSet(feedBackController.getFeedBackSet().getData()));
             testImportController.removeTestData();
             this.nextPanel(testImportController);
+            status = 3;
         }
     }
 }

@@ -23,17 +23,17 @@ public class TrainImportedDataSet {
         return data;
     }
 
-    public void addDocument(String clss, String document){
+    public void addDocument(String category, String document) {
 
-        if (!data.containsKey(clss)){
+        if (!data.containsKey(category)) {
             List<String> list = new ArrayList<>();
             list.add(document);
-            data.put(clss, list);
+            data.put(category, list);
         } else {
 
             for (String string : data.keySet()){
-                if (string.equals(clss)){
-                    data.get(clss).add(document);
+                if (string.equals(category)) {
+                    data.get(category).add(document);
 
                 }
             }

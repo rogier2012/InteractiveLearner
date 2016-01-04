@@ -34,7 +34,7 @@ public class HomeView extends JPanel{
         gbc = new GridBagConstraints();
 
         categoryAmount = new JSpinner();
-        SpinnerNumberModel model = new SpinnerNumberModel(2, 0, 10, 1);
+        SpinnerNumberModel model = new SpinnerNumberModel(2, 2, 10, 1);
         categoryAmount.setModel(model);
         gbc.gridx = 1;
         gbc.gridy = 1;
