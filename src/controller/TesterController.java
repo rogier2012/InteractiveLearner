@@ -11,7 +11,7 @@ import java.util.*;
 import static java.lang.Math.log;
 
 /**
- * Created by Rogier on 25-11-15
+ * Created by Rotgier Monschouwer on 25-11-15
  */
 public class TesterController implements PanelController{
     private TestedSet testedSet;
