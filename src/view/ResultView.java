@@ -14,7 +14,6 @@ import java.util.Map;
 public class ResultView extends JPanel{
     private JTextArea textArea;
     private JButton nextButton;
-    private JButton stopButton;
 
     public ResultView() {
         super(new GridBagLayout());
@@ -39,7 +38,7 @@ public class ResultView extends JPanel{
 
         this.add(nextButton, gbc);
         gbc = new GridBagConstraints();
-        stopButton = new JButton("Stop");
+        JButton stopButton = new JButton("Stop");
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

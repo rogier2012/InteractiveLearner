@@ -40,11 +40,10 @@ public class TesterController implements PanelController{
         } else {
             trainedMap = trainedSet.getWordCount();
         }
-
         for (String category : trainedMap.keySet()) {
             Set<String> badWords = new HashSet<>();
             for (String word : trainedMap.get(category).keySet()) {
-                if (trainedMap.get(category).get(word) <= 3) {
+                if (trainedMap.get(category).get(word) <= (trainedSet.getTotal() / 200)) {
                     badWords.add(word);
                 }
             }
@@ -52,11 +51,11 @@ public class TesterController implements PanelController{
                 trainedMap.get(category).remove(badWord);
             }
         }
-        double propClass = 1/((double)(trainedMap.size()));
+
 
         for (String document : dataSet.getData()) {
             Map<String, Double> resultPropabiltyOfDocument = new HashMap<String, Double>();
-            Set<String> stringSet = new HashSet<>(Arrays.asList(document.split("\\s+")));
+            List<String> stringSet = new ArrayList<>(Arrays.asList(document.split("\\s+")));
             Set<String> stringList = new HashSet<>();
             List<String> stopwords = Arrays.asList(FileUtils.stopwordList);
             for (String string1: stringSet){
@@ -67,28 +66,65 @@ public class TesterController implements PanelController{
                 }
 
             }
-            Map<String, Double> resultProb = new HashMap<>();
+
             for(String category : trainedMap.keySet()){
+                Set<String> localStringSet = new HashSet<>(stringList);
+                List<Double> resultProb = new ArrayList<>();
+                double propClass = trainedSet.getDocumentCount(category) / ((double) (trainedSet.getTotal()));
                 double totalDocumentCount = trainedSet.getDocumentCount(category);
-                resultProb.put(category, 1.0);
-                for(String word : stringList){
-                    int value = 0;
-                    if (trainedMap.get(category).get(word) != null){
-                         value = trainedMap.get(category).get(word);
+//                for(String word : stringList){
+//                    int value = 0;
+//                    if (trainedMap.get(category).get(word) != null){
+//                         value = trainedMap.get(category).get(word);
+//                    }
+//
+//
+//                    double calculatedVal = ((double)value+ 1 )/(totalDocumentCount+2);
+//                    double newval = resultProb.get(category) + log(calculatedVal);
+//                    resultProb.replace(category, newval);
+//                }
+                Set<String> vocabulary = new HashSet<>();
+                for (String category1 : trainedMap.keySet()) {
+                    for (String word : trainedMap.get(category1).keySet()) {
+                        vocabulary.add(word);
                     }
-
-
-                    double calculatedVal = ((double)value+ 1 )/(totalDocumentCount+2);
-                    double newval = resultProb.get(category) + log(calculatedVal);
-                    resultProb.replace(category, newval);
-
-
-
                 }
 
-                double newval = resultProb.get(category) + log(propClass);
-                resultProb.replace(category, newval);
-                resultPropabiltyOfDocument.put(category, resultProb.get(category));
+                for (String word : vocabulary) {
+                    if (localStringSet.contains(word)) {
+                        int value = 0;
+                        if (trainedMap.get(category).get(word) != null) {
+                            value = trainedMap.get(category).get(word);
+                        }
+                        double calculatedVal = ((double) value + 1) / (totalDocumentCount + 2);
+                        double newval = log(calculatedVal);
+                        resultProb.add(newval);
+                    } else {
+                        int value = 0;
+                        if (trainedMap.get(category).get(word) != null) {
+                            value = trainedMap.get(category).get(word);
+                        }
+                        double calculatedVal = 1 - ((double) value + 1) / ((double) (totalDocumentCount + 2));
+                        double newval = log(calculatedVal);
+                        resultProb.add(newval);
+                    }
+                }
+                localStringSet.removeAll(vocabulary);
+                for (String word : localStringSet) {
+                    int value = 0;
+                    double calculatedVal = ((double) value + 1) / ((double) (totalDocumentCount + 2));
+                    double newval = log(calculatedVal);
+                    resultProb.add(newval);
+                }
+
+
+                double newval = log(propClass);
+                resultProb.add(newval);
+                double newVal = 0;
+                for (Double chance : resultProb) {
+                    newVal = newVal + chance;
+                }
+                resultPropabiltyOfDocument.put(category, newVal);
 
             }
             String resultclass = getHighestProp(resultPropabiltyOfDocument);
