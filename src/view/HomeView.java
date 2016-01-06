@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 /**
  * Created by Rogier on 25-11-15
@@ -12,6 +13,8 @@ public class HomeView extends JPanel{
     private JButton nextButton;
     private JLabel categoryAmountLabel;
     private JSpinner categoryAmount;
+    private JCheckBox checkBox;
+
 
     public HomeView() {
         super(new GridBagLayout());
@@ -42,9 +45,23 @@ public class HomeView extends JPanel{
         gbc.ipadx = 30;
         this.add(categoryAmount, gbc);
         gbc = new GridBagConstraints();
-        nextButton = new JButton("Next");
+        JLabel chiSquare = new JLabel("Chi Square FS");
         gbc.gridx = 0;
         gbc.gridy = 2;
+        gbc.weightx = 1;
+        this.add(chiSquare, gbc);
+        gbc = new GridBagConstraints();
+        checkBox = new JCheckBox();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weightx = 1;
+        gbc.ipadx = 30;
+        this.add(checkBox, gbc);
+
+        gbc = new GridBagConstraints();
+        nextButton = new JButton("Next");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         gbc.weightx = 0.5;
 
         this.add(nextButton, gbc);
@@ -62,4 +79,10 @@ public class HomeView extends JPanel{
 
         return result;
     }
+
+    public void addCheckboxListener(ItemListener listener) {
+        checkBox.addItemListener(listener);
+    }
+
+
 }

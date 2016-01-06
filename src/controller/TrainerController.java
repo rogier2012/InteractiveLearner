@@ -29,24 +29,32 @@ public class TrainerController implements PanelController{
         return trainerView;
     }
 
-    public void train(TrainImportedDataSet dataSet){
+    public void train(TrainImportedDataSet dataSet, boolean chi) {
         List<String> stopwords = Arrays.asList(FileUtils.stopwordList);
         Map<String, List<String>> data = dataSet.getData();
         for (String category : data.keySet()) {
             for (String document : data.get(category)) {
                 Set<String> stringSet = new HashSet<>(Arrays.asList(document.split("\\s+")));
+                Set<String> strings = new HashSet<>();
                 for (String word : stringSet) {
                     String result = word.toLowerCase();
                     result = result.replaceAll("[^a-zA-Z]+", "");
                     if (!result.equals("") && !stopwords.contains(result)) {
-                        trainedSet.insert(category, result);
+                        strings.add(result);
                     }
 
+                }
+                for (String word : strings) {
+                    trainedSet.insert(category, word);
                 }
                 trainedSet.insertDocument(category);
             }
         }
-        this.featureSelection();
+        if (chi) {
+            trainedSet.newFilterSet();
+            this.featureSelection();
+        }
+
     }
 
     public TrainedSet getTrainedSet() {
@@ -55,10 +63,13 @@ public class TrainerController implements PanelController{
 
     public void featureSelection() {
         Map<String, Map<String, Integer>> chiSquares = new HashMap<>();
+
         Map<String, Map<String, Integer>> wordCount = trainedSet.getWordCount();
+
         for (String category : wordCount.keySet()) {
             chiSquares.put(category, new HashMap<>());
             for (String word : wordCount.get(category).keySet()) {
+//                Calculate Chi Square value per word
                 int n11 = wordCount.get(category).get(word);
                 int n10 = 0;
                 int n00 = 0;
@@ -78,28 +89,39 @@ public class TrainerController implements PanelController{
                 double e10 = ((n11 + n10) * (n10 + n00)) / total;
                 double e01 = ((n01 + n00) * (n11 + n01)) / total;
                 double e00 = ((n01 + n00) * (n10 + n00)) / total;
-
                 double eR11 = ((n11 - e11) * (n11 - e11)) / e11;
                 double eR10 = ((n10 - e10) * (n10 - e10)) / e10;
                 double eR01 = ((n01 - e01) * (n01 - e01)) / e01;
                 double eR00 = ((n00 - e00) * (n00 - e00)) / e00;
-
                 int result = (int) Math.floor(eR11 + eR10 + eR01 + eR00);
-
                 chiSquares.get(category).put(word, result);
             }
         }
+//      Filter words that occur in < 3 documents
         for (String category : chiSquares.keySet()) {
-            Set<String> badwords = new HashSet<>();
+            Set<String> badWords = new HashSet<>();
             for (String word : chiSquares.get(category).keySet()) {
-                if (chiSquares.get(category).get(word) < 4) {
-                    badwords.add(word);
+                if (wordCount.get(category).get(word) < 3) {
+                    badWords.add(word);
                 }
             }
-            for (String bad : badwords) {
+            for (String bad : badWords) {
+                chiSquares.remove(bad);
+            }
+        }
+//      Filter words that have a chi-square value < 4
+        for (String category : chiSquares.keySet()) {
+            Set<String> badWords = new HashSet<>();
+            for (String word : chiSquares.get(category).keySet()) {
+                if (chiSquares.get(category).get(word) < 4) {
+                    badWords.add(word);
+                }
+            }
+            for (String bad : badWords) {
                 chiSquares.get(category).remove(bad);
             }
         }
+//      Put best chi square words in their right category
         for (String category : chiSquares.keySet()) {
             for (String category1 : chiSquares.keySet()) {
                 if (!category.equals(category1)) {
@@ -113,28 +135,24 @@ public class TrainerController implements PanelController{
                 }
             }
         }
+//      Publish the chisquare data to a txt file
+        this.publishChiSquareData(chiSquares);
+//      Fill the filtered set
         for (String category : chiSquares.keySet()) {
             for (String word : chiSquares.get(category).keySet()) {
-
                     trainedSet.filteredInsert(category, word, wordCount.get(category).get(word));
-
             }
-//            int highestValue = 0;
-//            String highestWord = null;
-//            for (String word : chiSquares.get(category).keySet()) {
-//                if (highestValue < chiSquares.get(category).get(word)) {
-//                    highestValue = chiSquares.get(category).get(word);
-//                    highestWord = word;
-//                }
-//            }
-//            trainedSet.filteredInsert(category, highestWord, wordCount.get(category).get(highestWord));
-//            chiSquares.get(category).remove(highestWord);
-
-
-
         }
-        System.out.println("Hallo");
+    }
 
-
+    public void publishChiSquareData(Map<String, Map<String, Integer>> chiSquareData) {
+        List<String> file = new ArrayList<>();
+        for (String category : chiSquareData.keySet()) {
+            file.add(category);
+            for (String word : chiSquareData.get(category).keySet()) {
+                file.add(word + ": " + chiSquareData.get(category).get(word));
+            }
+        }
+        FileUtils.makeTxtFile(file);
     }
 }

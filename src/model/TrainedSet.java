@@ -45,9 +45,7 @@ public class TrainedSet {
         if (wordCount == null){
             wordCount = new HashMap<>();
         }
-        if (totalDocuments == null){
-            totalDocuments = new HashMap<>();
-        }
+
 
         if (!wordCount.containsKey(category)){
             Map<String, Integer> stringIntegerHashMap = new HashMap<>();
@@ -112,5 +110,9 @@ public class TrainedSet {
 
     public int getTotal() {
         return total;
+    }
+
+    public void newFilterSet() {
+        this.filteredWordCount = new HashMap<>();
     }
 }

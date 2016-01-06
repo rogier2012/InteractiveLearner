@@ -57,6 +57,7 @@ public class ResultView extends JPanel{
             textArea.append("Class: " + testedSet.get(document) + " Document: " + importedDataSet.getFileNames().get(importedDataSet.getData().indexOf(document)) + "\n");
 
         }
+        textArea.append("Number of items: " + importedDataSet.getFileNames().size());
     }
 
     public void addNextButtonActionListener(ActionListener actionListener) {

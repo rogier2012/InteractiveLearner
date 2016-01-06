@@ -33,9 +33,25 @@ public class TesterController implements PanelController{
         return testerView;
     }
 
-    public void test(TrainedSet trainedSet, TestImportedDataSet dataSet) {
-        System.out.println(dataSet.getData().size());
-        Map<String, Map<String, Integer>> trainedMap = trainedSet.getFilteredWordCount();
+    public void test(TrainedSet trainedSet, TestImportedDataSet dataSet, boolean chi) {
+        Map<String, Map<String, Integer>> trainedMap;
+        if (chi) {
+            trainedMap = trainedSet.getFilteredWordCount();
+        } else {
+            trainedMap = trainedSet.getWordCount();
+        }
+
+        for (String category : trainedMap.keySet()) {
+            Set<String> badWords = new HashSet<>();
+            for (String word : trainedMap.get(category).keySet()) {
+                if (trainedMap.get(category).get(word) <= 3) {
+                    badWords.add(word);
+                }
+            }
+            for (String badWord : badWords) {
+                trainedMap.get(category).remove(badWord);
+            }
+        }
         double propClass = 1/((double)(trainedMap.size()));
 
         for (String document : dataSet.getData()) {
@@ -51,7 +67,7 @@ public class TesterController implements PanelController{
                 }
 
             }
-            Map<String, Double> resultProb = new HashMap<String, Double>();
+            Map<String, Double> resultProb = new HashMap<>();
             for(String category : trainedMap.keySet()){
                 double totalDocumentCount = trainedSet.getDocumentCount(category);
                 resultProb.put(category, 1.0);

@@ -3,6 +3,11 @@ package helper;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -678,7 +683,7 @@ public class FileUtils {
             "zero"
     };
 
-    public static String fileToString(ZipFile zipFile, ZipEntry file){
+    public static String fileToString(ZipFile zipFile, ZipEntry file) {
         String result = "";
         try (BufferedReader br = new BufferedReader(new InputStreamReader(zipFile.getInputStream(file)))) {
             String line;
@@ -686,23 +691,23 @@ public class FileUtils {
                 result = result + line;
             }
             br.close();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.getMessage();
         }
         return result;
     }
 
     public static boolean isZipFile(File file) throws IOException {
-        if (file == null){
+        if (file == null) {
             throw new IOException();
         }
-        if( file.isDirectory()) {
+        if (file.isDirectory()) {
             return false;
         }
-        if(!file.canRead()) {
-            throw new IOException("Cannot read file "+file.getAbsolutePath());
+        if (!file.canRead()) {
+            throw new IOException("Cannot read file " + file.getAbsolutePath());
         }
-        if(file.length() < 4) {
+        if (file.length() < 4) {
             return false;
         }
         DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
@@ -711,7 +716,7 @@ public class FileUtils {
         return test == ZIPFILE;
     }
 
-    public static File getFile(String description){
+    public static File getFile(String description) {
         File selectedFile = null;
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter zipOnly = new FileNameExtensionFilter(null, "zip");
@@ -723,5 +728,15 @@ public class FileUtils {
 
         }
         return selectedFile;
+    }
+
+
+    public static void makeTxtFile(List<String> file) {
+        Path textFile = Paths.get("chi-words.txt");
+        try {
+            Files.write(textFile, file, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

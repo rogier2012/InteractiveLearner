@@ -6,12 +6,14 @@ import view.HomeView;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 /**
  * Created by Rogier on 25-11-15
  */
-public class LearnerController implements ActionListener{
+public class LearnerController implements ActionListener, ItemListener {
     private TesterController testerController = null;
     private TrainerController trainerControllerl;
     private TrainImportController trainImportController = null;
@@ -21,6 +23,7 @@ public class LearnerController implements ActionListener{
     private ResultController resultController;
     private JFrame frame;
     private int status;
+    private boolean chi;
 
     public LearnerController() {
         this.setupGUI();
@@ -33,8 +36,10 @@ public class LearnerController implements ActionListener{
         homeView = new HomeView();
         homeView.setupGUI();
         homeView.addNextButtonActionListener(this);
+        homeView.addCheckboxListener(this);
         frame.setSize(500,500);
         frame.setContentPane(homeView);
+        frame.setLocationByPlatform(true);
         status = 0;
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -55,7 +60,7 @@ public class LearnerController implements ActionListener{
             status = 1;
         } else if (status == 1) {
 //            this.nextPanel(trainerControllerl);
-            trainerControllerl.train(trainImportController.getData());
+            trainerControllerl.train(trainImportController.getData(), chi);
             testImportController = new TestImportController();
             testImportController.addNextButtonListener(this);
             this.nextPanel(testImportController);
@@ -63,7 +68,7 @@ public class LearnerController implements ActionListener{
         } else if (status == 3){
 //            this.nextPanel(testerController);
             testerController = new TesterController();
-            testerController.test(trainerControllerl.getTrainedSet(),testImportController.getDataSet());
+            testerController.test(trainerControllerl.getTrainedSet(), testImportController.getDataSet(), chi);
             resultController = new ResultController();
             resultController.addNextButtonListener(this);
             this.nextPanel(resultController);
@@ -76,11 +81,18 @@ public class LearnerController implements ActionListener{
             feedBackController.feedback(testerController.getTestedSet().getResult(), new ArrayList<>(trainerControllerl.getTrainedSet().getWordCount().keySet()), testImportController.getDataSet());
             status = 6;
         } else if (status == 6) {
-            trainerControllerl.train(new TrainImportedDataSet(feedBackController.getFeedBackSet().getData()));
+            trainerControllerl.train(new TrainImportedDataSet(feedBackController.getFeedBackSet().getData()), chi);
             testImportController = new TestImportController();
             testImportController.addNextButtonListener(this);
             this.nextPanel(testImportController);
             status = 3;
+        }
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getSource() instanceof JCheckBox) {
+            chi = e.getStateChange() == 1;
         }
     }
 }
